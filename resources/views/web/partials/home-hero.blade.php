@@ -6,9 +6,9 @@
 <section class="hero-section">
     <div class="hero-grid">
         <div class="hero-copy">
-            <h1 class="hero-title">Latest Best Devices</h1>
+            <h1 class="hero-title">Find and Book Lab Instruments with Confidence</h1>
             <p class="hero-description">
-                Discover bookable lab instruments with live availability, smooth date selection, and a faster request approval flow.
+                Discover advanced laboratory instruments, check availability, and submit booking requests in minutes through one streamlined workflow.
             </p>
 
             @if($heroInstrument)

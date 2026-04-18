@@ -3,7 +3,7 @@
 @section('content')
     <section class="mx-auto max-w-xl">
         <x-ui.card title="Verify Reset OTP" subtitle="Validate OTP to continue with password reset.">
-            <form method="POST" action="{{ route('web.verify-reset-otp.submit') }}" class="space-y-3">
+            <form method="POST" action="{{ route('web.verify-reset-otp.submit') }}" class="space-y-4">
                 @csrf
                 <x-ui.form-input type="email" label="Email" name="email" :value="$email" required />
                 <x-ui.form-input label="OTP" name="otp" required maxlength="6" />

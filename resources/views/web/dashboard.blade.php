@@ -7,7 +7,7 @@
         subtitle="Track booking performance, queue activity, and recent actions in one place."
     />
 
-    <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <section class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
         <x-ui.card class="metric-card">
             <p class="text-sm text-slate-500 dark:text-slate-400">Total Bookings</p>
             <p class="mt-2 text-3xl font-semibold">{{ $totalBookings }}</p>
@@ -26,7 +26,7 @@
         </x-ui.card>
     </section>
 
-    <section class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+    <section class="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <x-ui.card title="Recent Booking Activity" subtitle="Latest five booking requests.">
             <div class="space-y-2">
                 @forelse($bookings->take(5) as $booking)

@@ -7,7 +7,7 @@
         subtitle="Operational metrics for booking status and demand trends."
     />
 
-    <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <section class="ui-grid-4">
         @foreach($bookingsByStatus as $status => $total)
             <x-ui.card class="metric-card">
                 <p class="text-sm text-slate-500 dark:text-slate-400">{{ ucfirst($status) }}</p>
@@ -16,7 +16,7 @@
         @endforeach
     </section>
 
-    <section class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+    <section class="ui-grid-2">
         <x-ui.card title="Status Distribution" subtitle="Share of all bookings by status">
             <div class="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/40">
                 @forelse($bookingsByStatus as $status => $total)
@@ -52,7 +52,7 @@
         </x-ui.card>
     </section>
 
-    <x-ui.table :headers="['Instrument', 'Total Bookings']">
+    <x-ui.table :headers="['Instrument', 'Total Bookings']" class="mt-6">
         @forelse($bookingsByInstrument as $row)
             <tr>
                 <td>{{ $row->instrument?->name ?: $row->instrument_id }}</td>

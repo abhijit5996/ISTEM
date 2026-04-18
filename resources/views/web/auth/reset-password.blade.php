@@ -3,7 +3,7 @@
 @section('content')
     <section class="mx-auto max-w-xl">
         <x-ui.card title="Reset Password" subtitle="Create a new secure password for your account.">
-            <form method="POST" action="{{ route('web.reset-password.submit') }}" class="space-y-3">
+            <form method="POST" action="{{ route('web.reset-password.submit') }}" class="space-y-4">
                 @csrf
                 <x-ui.form-input type="email" label="Email" name="email" :value="$email" required />
                 <x-ui.form-input type="password" label="New Password" name="password" required />

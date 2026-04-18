@@ -12,14 +12,14 @@
             <a class="btn-pill btn-primary" href="{{ route('web.home') }}">Browse Instruments</a>
         </x-ui.empty-state>
     @else
-        <x-ui.table :headers="['Instrument', 'From', 'To', 'Actions']">
+        <x-ui.table :headers="['Instrument', 'From', 'To', 'Actions']" class="mt-2">
             @foreach($bag as $item)
                 <tr>
                     <td class="font-semibold">{{ $item['instrument_name'] }}</td>
                     <td>{{ $item['start_date'] }}</td>
                     <td>{{ $item['end_date'] }}</td>
                     <td>
-                        <form method="POST" action="{{ route('web.bag.remove', $item['instrument_id']) }}">
+                        <form method="POST" action="{{ route('web.bag.remove', $item['instrument_id']) }}" data-ajax-bag-remove="{{ $item['instrument_id'] }}">
                             @csrf
                             <button class="btn-pill btn-warn" type="submit">Remove</button>
                         </form>
@@ -28,7 +28,7 @@
             @endforeach
         </x-ui.table>
 
-        <div class="panel mt-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="panel mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p class="text-sm text-slate-500 dark:text-slate-400">{{ count($bag) }} item(s) selected</p>
             <div class="flex flex-wrap gap-2">
                 @if(session('web_user_id'))

@@ -2,7 +2,7 @@
     'headers' => [],
 ])
 
-<div class="table-shell">
+<div {{ $attributes->merge(['class' => 'table-shell']) }}>
     <div class="overflow-x-auto">
         <table class="table-ui">
             @if(count($headers))

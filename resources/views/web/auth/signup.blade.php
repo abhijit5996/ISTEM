@@ -3,7 +3,7 @@
 @section('content')
     <section class="mx-auto max-w-3xl">
         <x-ui.card title="Create Account" subtitle="Sign up to reserve instruments and receive booking updates.">
-            <form method="POST" action="{{ route('web.signup.submit') }}" class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <form method="POST" action="{{ route('web.signup.submit') }}" class="grid grid-cols-1 gap-4 sm:grid-cols-2" data-ajax-auth="signup">
                 @csrf
                 <x-ui.form-input class="sm:col-span-2" label="Name" name="name" required />
                 <x-ui.form-input label="Phone" name="phone" />

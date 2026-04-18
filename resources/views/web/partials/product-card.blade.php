@@ -2,6 +2,8 @@
     $isAvailable = $instrument->is_available;
     $price = number_format((float) ($instrument->usage_cost ?? 0), 2);
     $listPrice = number_format(((float) ($instrument->usage_cost ?? 0)) * 1.15, 2);
+    $formattedPrice = '₹' . $price;
+    $formattedListPrice = '₹' . $listPrice;
     $queueCount = $instrument->queues()->whereIn('status', ['pending', 'approved'])->count();
     $image = $instrument->image_url ?: asset('frontend/assets/hero-lab-DpylzpE1.jpg');
 @endphp
@@ -36,8 +38,8 @@
         <div>
             <h3 class="product-card-title">{{ $instrument->name }}</h3>
             <div class="product-card-prices">
-                <span class="product-card-price-current">${{ $price }}</span>
-                <span class="product-card-price-old">${{ $listPrice }}</span>
+                <span class="product-card-price-current">{{ $formattedPrice }}</span>
+                <span class="product-card-price-old">{{ $formattedListPrice }}</span>
             </div>
         </div>
 
@@ -58,7 +60,7 @@
             <span class="product-chip">Queue {{ $queueCount }}</span>
         </div>
 
-        <div class="product-card-footer">
+        <div class="product-card-footer gap-3">
             <span class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ $isAvailable ? 'Ready to book' : 'Join queue' }}</span>
             <a href="{{ route('web.instrument', $instrument->id) }}" class="product-cart-btn" aria-label="Open {{ $instrument->name }} details">
                 <i data-lucide="shopping-cart" class="h-4 w-4"></i>

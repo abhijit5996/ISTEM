@@ -27,40 +27,44 @@
                 'variant' => 'watch',
             ],
         ];
+
+        $services = [
+            [
+                'icon' => 'calendar-check-2',
+                'title' => 'Easy Instrument Booking',
+                'description' => 'Book advanced laboratory instruments in just a few clicks with real-time availability and a smooth approval process.',
+            ],
+            [
+                'icon' => 'clock-3',
+                'title' => 'Live Availability Tracking',
+                'description' => 'Check instrument availability instantly and plan your experiments without delays or scheduling conflicts.',
+            ],
+            [
+                'icon' => 'users-round',
+                'title' => 'Automated Queue Management',
+                'description' => 'Join a smart queue when instruments are busy and get automatically allocated once they become available.',
+            ],
+            [
+                'icon' => 'map-pin',
+                'title' => 'Multi-Location Lab Access',
+                'description' => 'Explore and book instruments across multiple labs and locations from a single unified platform.',
+            ],
+            [
+                'icon' => 'book-open-check',
+                'title' => 'Guidelines & Expert Support',
+                'description' => 'Access instrument usage manuals and get support to ensure safe and efficient operation.',
+            ],
+            [
+                'icon' => 'chart-column-increasing',
+                'title' => 'Insights & Analytics',
+                'description' => 'Track usage trends, booking history, and performance insights to optimize lab resource utilization.',
+            ],
+        ];
     @endphp
 
     @include('web.partials.home-hero', ['heroInstrument' => $heroInstrument])
 
-    <section class="section-block pb-2">
-        <div class="panel space-y-4">
-            <form method="GET" action="{{ route('web.instruments') }}" class="grid grid-cols-1 gap-3 md:grid-cols-[1fr_0.6fr_0.5fr_auto]">
-                <input type="search" name="search" class="input-ui" value="{{ $filters['search'] ?? '' }}" placeholder="Search instruments, categories, locations">
-                <select name="location" class="select-ui">
-                    <option value="">All Locations</option>
-                    @foreach($locations as $location)
-                        <option value="{{ $location }}" @selected(($filters['location'] ?? '') === $location)>{{ $location }}</option>
-                    @endforeach
-                </select>
-                <select name="availability" class="select-ui">
-                    <option value="all">Any Availability</option>
-                    <option value="available" @selected(($filters['availability'] ?? '') === 'available')>Available</option>
-                    <option value="booked" @selected(($filters['availability'] ?? '') === 'booked')>Booked</option>
-                </select>
-                <button type="submit" class="btn-pill btn-primary">Find Instruments</button>
-            </form>
-
-            <div class="overflow-x-auto pb-1">
-                <div class="flex min-w-max items-center gap-2">
-                    <a href="{{ route('web.instruments') }}" class="btn-pill btn-ghost">All Categories</a>
-                    @foreach($categories as $category)
-                        <a href="{{ route('web.category', $category) }}" class="btn-pill btn-ghost">{{ $category }}</a>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-block py-2 sm:py-4">
+    <section class="section-block py-4 sm:py-6">
         <div class="collection-panel">
             <div class="section-title-wrap">
                 <p class="section-kicker">Popular Product</p>
@@ -71,7 +75,7 @@
                 @forelse($featuredInstruments as $instrument)
                     @include('web.partials.product-card', ['instrument' => $instrument, 'featured' => $loop->first])
                 @empty
-                    <div class="xl:col-span-4 rounded-3xl border border-dashed border-slate-300 bg-white/80 p-8 text-center text-slate-600 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300">
+                    <div class="sm:col-span-2 md:col-span-3 lg:col-span-4 rounded-3xl border border-dashed border-slate-300 bg-white/80 p-8 text-center text-slate-600 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300">
                         No instruments available right now. Please check again later.
                     </div>
                 @endforelse
@@ -92,9 +96,33 @@
     </section>
 
     <section id="services-heading" class="services-heading">
-        <div class="section-title-wrap text-left sm:text-center">
-            <p class="section-kicker">Next Section</p>
-            <h2 class="section-title">Our Services</h2>
+        <div class="services-panel">
+            <div class="section-title-wrap">
+                <p class="section-kicker">Our Services</p>
+                <h2 class="section-title">Our Services</h2>
+                <p class="services-subtitle">
+                    Empowering research and innovation with seamless access to advanced laboratory instruments and smart booking solutions.
+                </p>
+            </div>
+
+            <div class="services-grid">
+                @foreach($services as $service)
+                    <article class="service-card">
+                        <div class="service-icon-shell" aria-hidden="true">
+                            <i data-lucide="{{ $service['icon'] }}" class="h-5 w-5"></i>
+                        </div>
+                        <h3 class="service-title">{{ $service['title'] }}</h3>
+                        <p class="service-description">{{ $service['description'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+
+            <div class="services-cta">
+                <p class="services-cta-text">Ready to streamline your lab operations?</p>
+                <a href="{{ route('web.home') }}#popular-product" class="btn-pill btn-primary">
+                    Explore Instruments
+                </a>
+            </div>
         </div>
     </section>
 @endsection

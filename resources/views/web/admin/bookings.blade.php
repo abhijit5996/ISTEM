@@ -9,7 +9,7 @@
         <a href="{{ route('web.admin.bookings.export') }}" class="btn-pill btn-ghost">Export CSV</a>
     </x-ui.page-header>
 
-    <x-ui.table :headers="['ID', 'User', 'Instrument', 'Time Slot', 'Status', 'Actions']">
+    <x-ui.table :headers="['ID', 'User', 'Instrument', 'Time Slot', 'Status', 'Actions']" class="mt-6">
         @foreach($bookings as $booking)
             <tr>
                 <td>{{ $booking->id }}</td>
@@ -21,7 +21,7 @@
                 <td>{{ $booking->start_date }} to {{ $booking->end_date }}</td>
                 <td><span class="status-chip status-{{ strtolower($booking->status) }}">{{ ucfirst($booking->status) }}</span></td>
                 <td>
-                    <div class="space-y-2">
+                    <div class="space-y-3">
                         @if($booking->status === 'pending')
                             <form method="POST" action="{{ route('web.admin.bookings.approve', $booking->id) }}" class="space-y-2">
                                 @csrf
@@ -53,7 +53,7 @@
     </x-ui.table>
 
     @if($bookings->hasPages())
-        <div class="mt-4 flex justify-center">
+        <div class="mt-6 flex justify-center">
             {{ $bookings->links() }}
         </div>
     @endif

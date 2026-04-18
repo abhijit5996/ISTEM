@@ -7,7 +7,7 @@
         subtitle="Saved instruments for quick booking. This can later be backed by persistent user-level storage."
     />
 
-    <section class="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
+    <section class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         @forelse($favorites as $instrument)
             <x-ui.card>
                 <img src="{{ $instrument->image_url ?? asset('frontend/assets/hero-lab-DpylzpE1.jpg') }}" alt="{{ $instrument->name }}" class="h-44 w-full rounded-2xl object-cover">
@@ -18,14 +18,14 @@
                 </div>
                 <div class="mt-4 flex flex-wrap gap-2">
                     <a href="{{ route('web.instrument', $instrument->id) }}" class="btn-pill btn-primary">Book Now</a>
-                    <form method="POST" action="{{ route('web.favorites.remove', $instrument->id) }}">
+                    <form method="POST" action="{{ route('web.favorites.remove', $instrument->id) }}" data-ajax-favorite="{{ $instrument->id }}">
                         @csrf
                         <button class="btn-pill btn-warn" type="submit">Remove</button>
                     </form>
                 </div>
             </x-ui.card>
         @empty
-            <div class="md:col-span-2 2xl:col-span-3">
+            <div class="md:col-span-2 lg:col-span-3">
                 <x-ui.empty-state title="No favorites yet" description="Use the heart action on instrument cards to save items here.">
                     <a href="{{ route('web.home') }}" class="btn-pill btn-primary">Browse Instruments</a>
                 </x-ui.empty-state>
@@ -34,7 +34,7 @@
     </section>
 
     @if($favorites->hasPages())
-        <div class="mt-5 flex justify-center">
+        <div class="mt-6 flex justify-center">
             {{ $favorites->links() }}
         </div>
     @endif

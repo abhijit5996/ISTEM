@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <section class="mx-auto grid max-w-5xl grid-cols-1 gap-4 lg:grid-cols-2">
+    <section class="mx-auto grid max-w-5xl grid-cols-1 gap-6 lg:grid-cols-2">
         <x-ui.card title="Welcome Back" subtitle="Sign in to continue with bookings, queue updates, and your profile dashboard.">
             <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
                 <li class="rounded-2xl border border-slate-200 p-3 dark:border-slate-700">Manage active bookings in one place</li>
@@ -11,7 +11,7 @@
         </x-ui.card>
 
         <x-ui.card title="Login" subtitle="Secure sign-in for your booking workspace.">
-            <form method="POST" action="{{ route('web.login.submit') }}" class="space-y-3">
+            <form method="POST" action="{{ route('web.login.submit') }}" class="space-y-4" data-ajax-auth="login">
                 @csrf
                 <x-ui.form-input type="email" label="Email" name="email" required />
                 <x-ui.form-input type="password" label="Password" name="password" required />

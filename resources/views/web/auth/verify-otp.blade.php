@@ -3,7 +3,7 @@
 @section('content')
     <section class="mx-auto max-w-xl">
         <x-ui.card title="Verify OTP" subtitle="Enter the 6-digit code sent to your email.">
-            <form method="POST" action="{{ route('web.verify-otp.submit') }}" class="space-y-3">
+            <form method="POST" action="{{ route('web.verify-otp.submit') }}" class="space-y-4">
                 @csrf
                 <x-ui.form-input type="email" label="Email" name="email" :value="$email" required />
                 <x-ui.form-input label="OTP" name="otp" required maxlength="6" />

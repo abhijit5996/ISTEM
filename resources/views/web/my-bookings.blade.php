@@ -7,7 +7,7 @@
         subtitle="Track submitted requests, approval status, and timeline."
     />
 
-    <x-ui.table :headers="['ID', 'Instrument', 'From', 'To', 'Status']">
+    <x-ui.table :headers="['ID', 'Instrument', 'From', 'To', 'Status']" class="mt-2">
         @forelse($bookings as $booking)
             <tr>
                 <td>{{ $booking->id }}</td>
@@ -28,7 +28,7 @@
     </x-ui.table>
 
     @if($bookings->hasPages())
-        <div class="mt-4 flex justify-center">
+        <div class="mt-6 flex justify-center">
             {{ $bookings->links() }}
         </div>
     @endif

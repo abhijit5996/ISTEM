@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\WebController;
 
 Route::get('/', [WebController::class, 'home'])->name('web.home');
@@ -70,4 +71,43 @@ Route::middleware('admin.session')->prefix('admin')->group(function () {
     Route::get('/analytics', [WebController::class, 'adminAnalytics'])->name('web.admin.analytics');
     Route::get('/users', [WebController::class, 'adminUsers'])->name('web.admin.users');
     Route::get('/users/export', [WebController::class, 'adminExportUsers'])->name('web.admin.users.export');
+});
+
+Route::prefix('ajax')->name('ajax.')->group(function () {
+    Route::get('/bootstrap', [AjaxController::class, 'bootstrap'])->name('bootstrap');
+    Route::get('/search-suggestions', [AjaxController::class, 'searchSuggestions'])->name('search-suggestions');
+
+    Route::post('/auth/login', [AjaxController::class, 'authLogin'])->name('auth.login');
+    Route::post('/auth/signup', [AjaxController::class, 'authSignup'])->name('auth.signup');
+    Route::post('/auth/logout', [AjaxController::class, 'authLogout'])->name('auth.logout');
+    Route::get('/auth/me', [AjaxController::class, 'authMe'])->name('auth.me');
+
+    Route::get('/instruments', [AjaxController::class, 'instruments'])->name('instruments');
+    Route::get('/instruments/{id}', [AjaxController::class, 'instrument'])->name('instrument');
+    Route::get('/instruments/{id}/related', [AjaxController::class, 'relatedInstruments'])->name('instrument.related');
+    Route::get('/instruments/{id}/availability', [AjaxController::class, 'instrumentAvailability'])->name('instrument.availability');
+
+    Route::get('/bag', [AjaxController::class, 'bagList'])->name('bag.list');
+    Route::post('/bag/add/{id}', [AjaxController::class, 'bagAdd'])->name('bag.add');
+    Route::post('/bag/remove/{id}', [AjaxController::class, 'bagRemove'])->name('bag.remove');
+
+    Route::get('/favorites', [AjaxController::class, 'favoritesList'])->name('favorites.list');
+    Route::post('/favorites/toggle/{id}', [AjaxController::class, 'favoritesToggle'])->name('favorites.toggle');
+
+    Route::post('/booking/validate', [AjaxController::class, 'bookingValidate'])->name('booking.validate');
+    Route::post('/booking/submit', [AjaxController::class, 'bookingSubmit'])->name('booking.submit');
+    Route::get('/bookings', [AjaxController::class, 'userBookings'])->name('bookings.list');
+
+    Route::post('/queue/join/{id}', [AjaxController::class, 'joinQueue'])->name('queue.join');
+    Route::get('/queue', [AjaxController::class, 'queueStatus'])->name('queue.status');
+
+    Route::get('/notifications', [AjaxController::class, 'notifications'])->name('notifications');
+    Route::post('/notifications/mark-read', [AjaxController::class, 'notificationsMarkRead'])->name('notifications.mark-read');
+});
+
+Route::middleware('admin.session')->prefix('ajax/admin')->name('ajax.admin.')->group(function () {
+    Route::get('/instruments', [AjaxController::class, 'adminInstruments'])->name('instruments');
+    Route::get('/bookings', [AjaxController::class, 'adminBookings'])->name('bookings');
+    Route::get('/users', [AjaxController::class, 'adminUsers'])->name('users');
+    Route::get('/analytics', [AjaxController::class, 'adminAnalytics'])->name('analytics');
 });

@@ -3,7 +3,7 @@
 @section('content')
     <section class="mx-auto max-w-xl">
         <x-ui.card title="Forgot Password" subtitle="Submit your registered email to receive reset OTP.">
-            <form method="POST" action="{{ route('web.forgot-password.submit') }}" class="space-y-3">
+            <form method="POST" action="{{ route('web.forgot-password.submit') }}" class="space-y-4">
                 @csrf
                 <x-ui.form-input type="email" label="Email" name="email" required />
                 <div class="flex flex-wrap gap-2">

@@ -15,7 +15,7 @@
         subtitle="Realtime-friendly queue view with progress and estimated wait indicators."
     />
 
-    <section class="grid grid-cols-1 gap-4 lg:grid-cols-2" data-queue-live>
+    <section class="grid grid-cols-1 gap-6 lg:grid-cols-2" data-queue-live>
         @forelse($queueItems as $item)
             <x-ui.card>
                 <div class="flex flex-wrap items-center justify-between gap-2">
@@ -44,7 +44,7 @@
     </section>
 
     @if($queueItems->hasPages())
-        <div class="mt-5 flex justify-center">
+        <div class="mt-6 flex justify-center">
             {{ $queueItems->links() }}
         </div>
     @endif

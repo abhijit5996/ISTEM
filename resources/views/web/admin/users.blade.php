@@ -9,22 +9,22 @@
         <a href="{{ route('web.admin.users.export') }}" class="btn-pill btn-ghost">Export CSV</a>
     </x-ui.page-header>
 
-    <section class="panel mb-4">
-        <form method="GET" action="{{ route('web.admin.users') }}" class="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_auto]">
+    <section class="panel">
+        <form method="GET" action="{{ route('web.admin.users') }}" class="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto_auto]">
             <input type="search" name="search" class="input-ui" value="{{ $filters['search'] ?? '' }}" placeholder="Search name, email, phone">
             <select name="sort" class="select-ui">
                 <option value="newest" @selected(($filters['sort'] ?? 'newest') === 'newest')>Newest</option>
                 <option value="oldest" @selected(($filters['sort'] ?? '') === 'oldest')>Oldest</option>
                 <option value="name" @selected(($filters['sort'] ?? '') === 'name')>Name A-Z</option>
             </select>
-            <div class="flex gap-2">
+            <div class="flex flex-wrap items-center gap-2">
                 <button type="submit" class="btn-pill btn-primary">Apply</button>
                 <a href="{{ route('web.admin.users') }}" class="btn-pill btn-ghost">Reset</a>
             </div>
         </form>
     </section>
 
-    <x-ui.table :headers="['Name', 'Email', 'Phone', 'Email Verified', 'Actions']">
+    <x-ui.table :headers="['Name', 'Email', 'Phone', 'Email Verified', 'Actions']" class="mt-6">
         @forelse($users as $user)
             <tr>
                 <td>
@@ -50,7 +50,7 @@
     </x-ui.table>
 
     @if($users->hasPages())
-        <div class="mt-4 flex justify-center">
+        <div class="mt-6 flex justify-center">
             {{ $users->links() }}
         </div>
     @endif

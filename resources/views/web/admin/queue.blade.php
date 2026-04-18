@@ -7,7 +7,7 @@
         subtitle="Handle queue approvals and rejections for instrument access."
     />
 
-    <x-ui.table :headers="['ID', 'Instrument', 'User', 'Position', 'Slot', 'Status', 'Actions']">
+    <x-ui.table :headers="['ID', 'Instrument', 'User', 'Position', 'Slot', 'Status', 'Actions']" class="mt-6">
         @foreach($queueItems as $item)
             <tr>
                 <td>{{ $item->id }}</td>
@@ -20,7 +20,7 @@
                 <td>{{ $item->date }} {{ $item->time_slot }}</td>
                 <td><span class="status-chip status-{{ strtolower($item->status) }}">{{ ucfirst($item->status) }}</span></td>
                 <td>
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
                         <form method="POST" action="{{ route('web.admin.queue.approve') }}">
                             @csrf
                             <input type="hidden" name="id" value="{{ $item->id }}">
@@ -38,7 +38,7 @@
     </x-ui.table>
 
     @if($queueItems->hasPages())
-        <div class="mt-4 flex justify-center">
+        <div class="mt-6 flex justify-center">
             {{ $queueItems->links() }}
         </div>
     @endif

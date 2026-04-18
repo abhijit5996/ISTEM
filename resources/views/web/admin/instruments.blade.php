@@ -13,7 +13,7 @@
     </x-ui.page-header>
 
     <section class="panel">
-        <form method="GET" action="{{ route('web.admin.instruments') }}" class="grid grid-cols-1 gap-3 sm:grid-cols-4">
+        <form method="GET" action="{{ route('web.admin.instruments') }}" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <div>
                 <label class="label-ui" for="location">Filter by location</label>
                 <select id="location" name="location" class="select-ui">
@@ -44,14 +44,14 @@
                 <label class="label-ui" for="search">Search</label>
                 <input id="search" type="search" name="search" class="input-ui" placeholder="Search by name/category/location" value="{{ $filters['search'] ?? '' }}">
             </div>
-            <div class="sm:col-span-4 flex flex-wrap gap-2">
+            <div class="sm:col-span-2 xl:col-span-4 flex flex-wrap gap-2">
                 <button class="btn-pill btn-primary" type="submit">Apply Filters</button>
                 <a class="btn-pill btn-ghost" href="{{ route('web.admin.instruments') }}">Reset</a>
             </div>
         </form>
     </section>
 
-    <x-ui.table :headers="['Name', 'Status', 'Location', 'Availability', 'Actions']">
+    <x-ui.table :headers="['Name', 'Status', 'Location', 'Availability', 'Actions']" class="mt-6">
         @foreach($instruments as $instrument)
             <tr>
                 <td class="font-semibold">{{ $instrument->name }}</td>
@@ -61,7 +61,7 @@
                     <span class="status-chip {{ $instrument->is_available ? 'status-available' : 'status-booked' }}">{{ $instrument->is_available ? 'Available' : 'Booked' }}</span>
                 </td>
                 <td>
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
                         <button class="btn-pill btn-ghost" type="button" data-open-modal="edit-instrument-{{ $instrument->id }}">Edit</button>
                         <form method="POST" action="{{ route('web.admin.instruments.delete', $instrument->id) }}">
                             @csrf
@@ -74,7 +74,7 @@
     </x-ui.table>
 
     @if($instruments->hasPages())
-        <div class="mt-4 flex justify-center">
+        <div class="mt-6 flex justify-center">
             {{ $instruments->links() }}
         </div>
     @endif

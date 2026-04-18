@@ -25,52 +25,52 @@
         <a href="{{ route('web.home') }}" class="btn-pill btn-ghost">Back to Listing</a>
     </x-ui.page-header>
 
-    <section class="grid grid-cols-1 gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+    <section class="grid grid-cols-1 gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <x-ui.card>
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <img src="{{ $instrument->image_url ?? asset('frontend/assets/hero-lab-DpylzpE1.jpg') }}" alt="{{ $instrument->name }}" class="h-72 w-full rounded-2xl object-cover sm:col-span-2">
-                <div class="space-y-3">
+                <div class="space-y-4">
                     <img src="{{ $instrument->image_url ?? asset('frontend/assets/hero-lab-DpylzpE1.jpg') }}" alt="Gallery image" class="h-[8.4rem] w-full rounded-2xl object-cover">
                     <img src="{{ asset('frontend/assets/hero-lab-DpylzpE1.jpg') }}" alt="Gallery image" class="h-[8.4rem] w-full rounded-2xl object-cover">
                 </div>
             </div>
 
-            <div class="mt-4 flex flex-wrap items-center gap-2">
+            <div class="mt-6 flex flex-wrap items-center gap-2">
                 <span class="status-chip {{ $statusClass }}">{{ $statusText }}</span>
                 <span class="status-chip status-pending">Category: {{ $instrument->category ?: 'General' }}</span>
                 <span class="status-chip status-pending">Location: {{ $instrument->location ?: 'Main Lab' }}</span>
                 <span class="status-chip status-pending">Status: {{ ucfirst($instrument->status ?: 'available') }}</span>
-                <span class="status-chip status-approved">Pricing: ${{ $displayPrice }} / day</span>
+                <span class="status-chip status-approved">Pricing: ₹{{ $displayPrice }} / day</span>
                 <a href="{{ route('web.instrument.guidelines', $instrument->id) }}" class="btn-pill btn-ghost">Download Usage Guidelines</a>
             </div>
         </x-ui.card>
 
-        <div class="space-y-4">
+        <div class="space-y-6">
             <x-ui.card title="Book Now">
-                <form method="POST" action="{{ route('web.bag.add', $instrument->id) }}" class="grid grid-cols-1 gap-3">
+                <form method="POST" action="{{ route('web.bag.add', $instrument->id) }}" class="grid grid-cols-1 gap-4" data-ajax-bag-add="{{ $instrument->id }}">
                     @csrf
                     <x-ui.date-picker label="From Date" name="start_date" required />
                     <x-ui.date-picker label="To Date" name="end_date" required />
-                    <button class="btn-pill btn-primary" type="submit">Add to Bag</button>
+                    <button class="btn-pill btn-primary w-full sm:w-auto" type="submit">Add to Bag</button>
                 </form>
             </x-ui.card>
 
             <x-ui.card title="Join Queue" subtitle="Queue submission uses existing backend logic.">
                 @if(session('web_user_id'))
-                    <form method="POST" action="{{ route('web.queue.join', $instrument->id) }}" class="grid grid-cols-1 gap-3">
+                    <form method="POST" action="{{ route('web.queue.join', $instrument->id) }}" class="grid grid-cols-1 gap-4" data-ajax-queue-join="{{ $instrument->id }}">
                         @csrf
                         <x-ui.date-picker label="From Date" name="start_date" required />
                         <x-ui.date-picker label="To Date" name="end_date" required />
-                        <button class="btn-pill btn-ghost" type="submit">Join Queue</button>
+                        <button class="btn-pill btn-ghost w-full sm:w-auto" type="submit">Join Queue</button>
                     </form>
                 @else
                     <p class="text-sm text-slate-500 dark:text-slate-400">Please <a href="{{ route('web.login') }}" class="font-semibold text-cyan-700 dark:text-cyan-300">login</a> to join queue.</p>
                 @endif
 
-                <div class="mt-3 flex flex-wrap gap-2">
+                <div class="mt-4 flex flex-wrap gap-2">
                     <a href="{{ route('web.bag') }}" class="btn-pill btn-primary">Book Now</a>
                     @if(session('web_user_id'))
-                        <form method="POST" action="{{ route('web.favorites.add', $instrument->id) }}">
+                        <form method="POST" action="{{ route('web.favorites.add', $instrument->id) }}" data-ajax-favorite="{{ $instrument->id }}">
                             @csrf
                             <button type="submit" class="btn-pill btn-ghost">Add to Favorites</button>
                         </form>
@@ -107,7 +107,7 @@
         </div>
     </section>
 
-    <section class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+    <section class="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <x-ui.card title="Admin Notes / Comments" subtitle="Operational guidance and review comments for this instrument.">
             <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
                 <li class="rounded-xl border border-slate-200 p-3 dark:border-slate-700">Follow safety onboarding checklist before usage.</li>
