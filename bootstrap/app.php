@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+$app = Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        // Ensure CORS runs before the rest of the middleware stack
+        $middleware->prepend(\App\Http\Middleware\HandleCors::class);
+        $middleware->alias([
+            'user.session' => \App\Http\Middleware\EnsureUserSession::class,
+            'admin.session' => \App\Http\Middleware\EnsureAdminSession::class,
+        ]);
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        //
+    })->create();
+
+$app->bind('path.public', function () {
+    return __DIR__.'/../public';
+});
+
+return $app;
