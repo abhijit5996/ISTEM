@@ -54,6 +54,8 @@ jobs:
           port: ${{ secrets.HOSTINGER_PORT }}
           script: |
             cd public_html
+            mkdir -p bootstrap/cache storage/framework/views storage/framework/cache storage/framework/sessions
+            chmod -R 775 bootstrap/cache storage
             php artisan migrate --force
             php artisan optimize:clear
             php artisan optimize
