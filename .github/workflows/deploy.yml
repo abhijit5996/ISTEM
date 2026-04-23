@@ -41,7 +41,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOSTINGER_HOST }}
           REMOTE_PORT: ${{ secrets.HOSTINGER_PORT }}
           REMOTE_USER: ${{ secrets.HOSTINGER_USERNAME }}
-          TARGET: "public_html/"
+          TARGET: "domains/istem.auaicoe.in/public_html/"
           # EXTREMELY IMPORTANT: Exclude .env and storage so they aren't deleted from the live server!
           EXCLUDE: "/.git/, /node_modules/, /.github/, /.env, /storage/, /bootstrap/cache/"
 
@@ -53,7 +53,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: ${{ secrets.HOSTINGER_PORT }}
           script: |
-            cd public_html
+            cd domains/istem.auaicoe.in/public_html
             mkdir -p bootstrap/cache storage/framework/views storage/framework/cache storage/framework/sessions
             chmod -R 775 bootstrap/cache storage
             php artisan migrate --force
