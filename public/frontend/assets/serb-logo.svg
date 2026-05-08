@@ -1,0 +1,20 @@
+<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="100" fill="none"/>
+  
+  <!-- Main hexagon shape for SERB -->
+  <g>
+    <!-- Outer hexagon border -->
+    <path d="M 50 20 L 80 20 L 100 40 L 80 60 L 50 60 L 30 40 Z" 
+          fill="none" stroke="#00D9FF" stroke-width="2" stroke-linejoin="round"/>
+    
+    <!-- Inner accent -->
+    <circle cx="65" cy="40" r="8" fill="#00D9FF" opacity="0.6"/>
+    <circle cx="65" cy="40" r="5" fill="#00D9FF"/>
+  </g>
+  
+  <!-- SERB text -->
+  <text x="120" y="35" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#00D9FF">SERB</text>
+  <text x="120" y="50" font-family="Arial, sans-serif" font-size="10" fill="#4F46E5">Science &amp; Eng.</text>
+  <text x="120" y="62" font-family="Arial, sans-serif" font-size="10" fill="#4F46E5">Research Board</text>
+</svg>

@@ -8,7 +8,7 @@
     $image = $instrument->image_url ?: asset('frontend/assets/hero-lab-DpylzpE1.jpg');
 @endphp
 
-<article class="product-card group">
+<article class="product-card group" data-reveal data-mouse-glow>
     <div class="product-card-media">
         <span class="product-card-badge">{{ $isAvailable ? 'Open' : 'Booked' }}</span>
         @if(session('web_user_id'))
@@ -42,6 +42,8 @@
                 <span class="product-card-price-old">{{ $formattedListPrice }}</span>
             </div>
         </div>
+
+        <p class="product-card-summary">{{ $instrument->category ?: 'General' }} equipment with live queue visibility and production-safe booking flow.</p>
 
         <div class="product-card-rating">
             <span class="product-card-stars" aria-hidden="true">

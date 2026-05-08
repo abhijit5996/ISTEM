@@ -1,4 +1,4 @@
-<article class="promo-card {{ $banner['variant'] === 'watch' ? 'promo-card-watch' : 'promo-card-mobile' }}">
+<article class="promo-card {{ $banner['variant'] === 'watch' ? 'promo-card-watch' : 'promo-card-mobile' }}" data-reveal data-mouse-glow>
     <div class="promo-card-copy">
         <p class="promo-card-label">{{ $banner['label'] }}</p>
         <h3 class="promo-card-title">{{ $banner['title'] }}</h3>

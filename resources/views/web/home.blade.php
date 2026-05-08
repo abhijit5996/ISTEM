@@ -4,6 +4,17 @@
     @php
         $heroInstrument = $instruments->first();
         $featuredInstruments = $instruments;
+        $ecosystemStats = [
+            ['label' => 'Instruments', 'value' => '150+'],
+            ['label' => 'Labs Connected', 'value' => '12'],
+            ['label' => 'Research Requests', 'value' => '24/7'],
+        ];
+
+        $innovationSteps = [
+            ['step' => '01', 'title' => 'Discover', 'description' => 'Browse live instrument availability with an institutional-grade discovery flow.'],
+            ['step' => '02', 'title' => 'Reserve', 'description' => 'Submit bookings with the existing workflow and keep your research schedule aligned.'],
+            ['step' => '03', 'title' => 'Execute', 'description' => 'Track approvals, queue status, and usage handoffs through one seamless interface.'],
+        ];
 
         $promoBanners = [
             [
@@ -60,15 +71,155 @@
                 'description' => 'Track usage trends, booking history, and performance insights to optimize lab resource utilization.',
             ],
         ];
+
+        $researchSignals = ['AI-enabled labs', 'Premium booking UX', 'Live queue visibility', 'Enterprise-grade workflow', 'Research-first design'];
     @endphp
 
-    @include('web.partials.home-hero', ['heroInstrument' => $heroInstrument])
+    @include('web.partials.institutional-hero', ['heroInstrument' => $heroInstrument, 'ecosystemStats' => $ecosystemStats])
 
-    <section class="section-block py-4 sm:py-6">
+    <section class="section-block pt-0" data-reveal>
+        <div class="insight-panel">
+            <div class="insight-grid">
+                @foreach($ecosystemStats as $stat)
+                    <article class="metric-card metric-card-compact">
+                        <p class="metric-label">{{ $stat['label'] }}</p>
+                        <p class="metric-value">{{ $stat['value'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+
+            <div class="logo-marquee" aria-label="Institutional highlights">
+                <div class="logo-marquee-track">
+                    @foreach($researchSignals as $signal)
+                        <span class="logo-marquee-chip">{{ $signal }}</span>
+                    @endforeach
+                    @foreach($researchSignals as $signal)
+                        <span class="logo-marquee-chip" aria-hidden="true">{{ $signal }}</span>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- About the Centre --}}
+    <section class="section-block py-8 sm:py-10" data-reveal>
         <div class="collection-panel">
             <div class="section-title-wrap">
-                <p class="section-kicker">Popular Product</p>
+                <p class="section-kicker">About</p>
+                <h2 class="section-title">Biomaterials Laboratory (BL)</h2>
+                <p class="section-subtitle">Since its inception in 2024, the Biomaterials Laboratory (BL) has been creating cost-effective, translational technologies addressing diagnostics, regenerative therapies, therapeutic delivery, food safety, and agricultural challenges by exploring Indian biodiversity and sustainable materials.</p>
+            </div>
+
+            <div class="mt-6 grid gap-6 md:grid-cols-2">
+                <div class="insight-panel">
+                    <p class="text-sm leading-7 text-slate-600 dark:text-slate-400">Biomaterials Laboratory emphasizes excellence in research with translational impact, fosters innovation, continuous inquiry, and upholds societal and scientific accountability. We focus on sustainable technologies, regenerative therapies, material toxicity analysis at nano–micro scales, and food safety.</p>
+                    <div class="mt-6 flex items-center gap-3">
+                        <img src="{{ asset('frontend/assets/serb-logo.svg') }}" alt="SERB logo" class="h-10 w-auto">
+                        <img src="{{ asset('frontend/assets/centre-logo.svg') }}" alt="Centre logo" class="h-10 w-auto">
+                    </div>
+                </div>
+
+                <div class="insight-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Mission</p>
+                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Fostering an inclusive, ethical, and interdisciplinary research environment that prioritizes equity, diversity, and shared growth by preparing and inspiring students and intellectuals through exploration of nature and evolution in materials, sustainable technologies, regenerative therapies, material toxicity and food safety.</p>
+
+                    <p class="mt-4 text-sm font-semibold text-slate-900 dark:text-white">Vision</p>
+                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Biomaterials Laboratory strives to be the hub of translational interdisciplinary excellence in thematic fields like smart & diagnostic, therapeutic safety, agriculture, and food technologies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Publications & Book Chapters --}}
+    <section class="section-block py-8 sm:py-10" data-reveal>
+        <div class="innovation-panel">
+            <div class="section-title-wrap">
+                <p class="section-kicker">Research</p>
+                <h2 class="section-title">Publications & Book Chapters</h2>
+                <p class="section-subtitle">Selected peer-reviewed publications and authored book chapters from the centre.</p>
+            </div>
+
+            <div class="mt-6 grid gap-4 md:grid-cols-2">
+                <article class="insight-panel">
+                    <p class="font-semibold">Chen J, Wang Y, Yang I, Li B, Kundu B, Kundu SC, Telas RL, Lin K, Li L.</p>
+                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Silkworm-gut-processed TCF 53 and BMP 2 from biomimetic calcium phosphate matrices. Journal of Nanobiotechnology (2024) 22:453</p>
+                </article>
+
+                <article class="insight-panel">
+                    <p class="font-semibold">Kundu B, Branesto V, Telas RL</p>
+                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Hydroxyapatite alters bone metastatic tropism of cancer cells in engineered pre-metastatic niche. Under Review (2025)</p>
+                </article>
+            </div>
+
+            <div class="mt-6">
+                <p class="font-semibold">Book Chapters</p>
+                <ul class="mt-3 list-inside list-disc text-sm text-slate-600 dark:text-slate-400">
+                    <li>Importance of sustainability in packaging</li>
+                    <li>Silk fibroin coaxialism and protein-based nanocarriers for therapeutic delivery</li>
+                    <li>Exosomes in bone homeostasis, repair and regeneration</li>
+                    <li>Public Perception of Artificial Intelligence: A Questionnaire Study</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    {{-- Projects & Awards --}}
+    <section class="section-block py-8 sm:py-10" data-reveal>
+        <div class="collection-panel">
+            <div class="section-title-wrap">
+                <p class="section-kicker">Projects & Recognition</p>
+                <h2 class="section-title">Selected Projects & Awards</h2>
+                <p class="section-subtitle">Key projects, fundings and recognitions from the Biomaterials Laboratory.</p>
+            </div>
+
+            <div class="mt-6 grid gap-4 md:grid-cols-2">
+                <article class="insight-panel">
+                    <p class="font-semibold">Project: BioSHIELD</p>
+                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Biocompatible Shield that Extends the Shelf-life of Fruits. Funding: Seed Fund – Adamas University. Reference: IAU/REG/NOT/2026/02/0011. Date: 11.02.2025</p>
+                </article>
+
+                <article class="insight-panel">
+                    <p class="font-semibold">Awards & Recognition</p>
+                    <ul class="mt-2 list-inside list-disc text-sm text-slate-600 dark:text-slate-400">
+                        <li>Stanford University’s Top 2% Scientists (2024)</li>
+                        <li>IIT Indore Invited Talk (April 2025)</li>
+                        <li>Associate Editor — Frontiers in Bioengineering and Biotechnology</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    {{-- Research Areas --}}
+    <section class="section-block py-8 sm:py-10" data-reveal>
+        <div class="innovation-panel">
+            <div class="section-title-wrap">
+                <p class="section-kicker">Focus Areas</p>
+                <h2 class="section-title">Research Areas</h2>
+                <p class="section-subtitle">Key thematic areas where BL conducts research and innovation.</p>
+            </div>
+
+            @php
+                $researchAreas = ['Biomaterials','Regenerative Therapies','Therapeutic Delivery','Food Technology','Agricultural Innovation','Nano Toxicity','Sustainable Technologies','Translational Healthcare','Smart Diagnostics'];
+            @endphp
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach($researchAreas as $area)
+                    <article class="insight-panel">
+                        <p class="font-semibold">{{ $area }}</p>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Research, prototyping and translational activities in {{ $area }} to drive sustainable and clinically relevant innovations.</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section-block py-8 sm:py-10" data-reveal>
+        <div class="collection-panel">
+            <div class="section-title-wrap">
+                <p class="section-kicker">Featured inventory</p>
                 <h2 class="section-title">Available Instruments</h2>
+                <p class="section-subtitle">A curated view of live lab assets with premium visual hierarchy and unchanged booking behavior.</p>
             </div>
 
             <div id="popular-product" class="product-grid">
@@ -95,10 +246,30 @@
         </div>
     </section>
 
-    <section id="services-heading" class="services-heading">
+    <section class="section-block py-8 sm:py-10" data-reveal>
+        <div class="innovation-panel">
+            <div class="section-title-wrap text-left lg:max-w-xl">
+                <p class="section-kicker">Research workflow</p>
+                <h2 class="section-title">Designed for fast, confident lab execution</h2>
+                <p class="section-subtitle">A modern workflow layer that keeps discovery, scheduling, approval, and queue handoffs visually clear without altering any backend logic.</p>
+            </div>
+
+            <div class="timeline-grid">
+                @foreach($innovationSteps as $step)
+                    <article class="timeline-card">
+                        <span class="timeline-step">{{ $step['step'] }}</span>
+                        <h3 class="timeline-title">{{ $step['title'] }}</h3>
+                        <p class="timeline-description">{{ $step['description'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section id="services-heading" class="services-heading" data-reveal>
         <div class="services-panel">
             <div class="section-title-wrap">
-                <p class="section-kicker">Our Services</p>
+                <p class="section-kicker">Platform capabilities</p>
                 <h2 class="section-title">Our Services</h2>
                 <p class="services-subtitle">
                     Empowering research and innovation with seamless access to advanced laboratory instruments and smart booking solutions.

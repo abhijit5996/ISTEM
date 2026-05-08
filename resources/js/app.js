@@ -33,12 +33,13 @@ const applyTheme = (theme) => {
 	} else {
 		docEl.classList.remove('dark');
 	}
+
+	docEl.style.colorScheme = theme;
 };
 
 const savedTheme = localStorage.getItem('istem-theme');
-if (savedTheme) {
-	applyTheme(savedTheme);
-}
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
 
 document.querySelectorAll('[data-theme-toggle]').forEach((toggle) => {
 	toggle.addEventListener('click', () => {
@@ -265,6 +266,70 @@ const handleScrolledUI = () => {
 
 handleScrolledUI();
 window.addEventListener('scroll', handleScrolledUI, { passive: true });
+
+const revealTargets = document.querySelectorAll('[data-reveal]');
+if (revealTargets.length) {
+	if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+		revealTargets.forEach((element) => element.classList.add('is-visible'));
+	} else {
+		const revealObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						revealObserver.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.18 },
+		);
+
+		revealTargets.forEach((element) => revealObserver.observe(element));
+	}
+}
+
+document.querySelectorAll('[data-mouse-glow]').forEach((element) => {
+	const updateGlow = (event) => {
+		const bounds = element.getBoundingClientRect();
+		const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+		const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+		element.style.setProperty('--mouse-x', `${x}%`);
+		element.style.setProperty('--mouse-y', `${y}%`);
+	};
+
+	element.addEventListener('pointermove', updateGlow);
+	element.addEventListener('pointerenter', updateGlow);
+	element.addEventListener('pointerleave', () => {
+		element.style.setProperty('--mouse-x', '50%');
+		element.style.setProperty('--mouse-y', '30%');
+	});
+});
+
+document.querySelectorAll('[data-parallax-card]').forEach((element) => {
+	if (prefersReducedMotion) {
+		return;
+	}
+
+	const resetTransform = () => {
+		element.style.transform = '';
+	};
+
+	const updateTransform = (event) => {
+		const bounds = element.getBoundingClientRect();
+		const centerX = bounds.left + bounds.width / 2;
+		const centerY = bounds.top + bounds.height / 2;
+		const offsetX = (event.clientX - centerX) / bounds.width;
+		const offsetY = (event.clientY - centerY) / bounds.height;
+		const translateX = offsetX * 10;
+		const translateY = offsetY * 10;
+		const rotateX = offsetY * -4;
+		const rotateY = offsetX * 4;
+		element.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+	};
+
+	element.addEventListener('pointermove', updateTransform);
+	element.addEventListener('pointerleave', resetTransform);
+});
 
 if (scrollTopButton) {
 	scrollTopButton.addEventListener('click', () => {
