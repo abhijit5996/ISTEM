@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Mailable;
 use App\Models\Booking;
 use App\Models\Instrument;
 use App\Models\BookingLock;
@@ -179,15 +180,14 @@ class BookingController extends Controller
             $booking->status = 'approved';
             $booking->save();
 
-            $recipient = $booking->email ?? $booking->user_email;
+            $recipient = $booking->email ?: $booking->user_email;
             $emailSent = false;
 
             // Send confirmation email synchronously so the
             // API call completes only after attempting email.
             try {
                 if ($recipient) {
-                    Mail::to($recipient)->send(new BookingApprovedMail($booking));
-                    $emailSent = true;
+                    $emailSent = $this->sendBookingNotificationMail($recipient, new BookingApprovedMail($booking));
                 } else {
                     Log::warning('Booking approval email recipient missing', [
                         'booking_id' => $id,
@@ -225,10 +225,14 @@ class BookingController extends Controller
             $booking->status = 'rejected';
             $booking->save();
 
-            $recipient = $booking->email ?? $booking->user_email;
+            $recipient = $booking->email ?: $booking->user_email;
 
             dispatch(function () use ($recipient, $booking) {
-                Mail::to($recipient)->send(new BookingRejectedMail($booking));
+                if ($recipient) {
+                    Mail::mailer(config('services.resend.key') ? 'resend' : config('mail.default'))
+                        ->to($recipient)
+                        ->send(new BookingRejectedMail($booking));
+                }
             });
 
             return response()->json(['success' => true]);
@@ -246,6 +250,25 @@ class BookingController extends Controller
             'success' => true,
             'data' => $bookings,
         ]);
+    }
+
+    private function sendBookingNotificationMail(string $recipient, Mailable $mailable): bool
+    {
+        if (filled(config('services.resend.key'))) {
+            Mail::mailer('resend')->to($recipient)->send($mailable);
+            return true;
+        }
+
+        if (config('mail.default') === 'log') {
+            Log::warning('Booking notification email not sent because the active mailer is log', [
+                'recipient' => $recipient,
+                'mailable' => $mailable::class,
+            ]);
+            return false;
+        }
+
+        Mail::to($recipient)->send($mailable);
+        return true;
     }
 
     public function adminBookings()

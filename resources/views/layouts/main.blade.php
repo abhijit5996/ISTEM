@@ -35,7 +35,7 @@
 <body class="{{ $isHome ? 'home-page min-h-screen antialiased transition-colors duration-300' : 'app-shell min-h-screen antialiased transition-colors duration-300' }}">
 <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-70 focus:rounded-full focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
 
-@if(session('web_admin_id'))
+@if(session('web_admin_id') && request()->is('admin*'))
     {{-- Admin / Legacy header preserved for admin sessions --}}
     <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-md transition-all duration-200 dark:border-white/10 dark:bg-slate-950/65 dark:backdrop-blur-2xl" data-main-header>
     <div class="mx-auto w-full max-w-7xl px-4 md:px-8">
