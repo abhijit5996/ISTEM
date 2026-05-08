@@ -24,8 +24,19 @@
                 <a href="#contact" class="nav-premium">Contact</a>
             </nav>
 
-            {{-- RIGHT: CTA Button & Controls --}}
-            <div class="ml-auto flex items-center gap-2.5">
+            {{-- RIGHT: Auth & Controls --}}
+            <div class="ml-auto flex items-center gap-3">
+                {{-- Auth Controls --}}
+                @if(session('web_user_id'))
+                    <a href="{{ route('web.profile') }}" class="hidden md:inline-flex btn-institutional-login whitespace-nowrap">
+                        My Profile
+                    </a>
+                @else
+                    <a href="{{ route('web.login') }}" class="hidden md:inline-flex btn-institutional-login whitespace-nowrap">
+                        Login
+                    </a>
+                @endif
+
                 {{-- Dark Mode Toggle --}}
                 <button type="button" class="institutional-icon-btn" data-theme-toggle title="Toggle dark mode">
                     <i data-lucide="moon" class="h-4 w-4"></i>
@@ -37,11 +48,6 @@
                     <i data-lucide="menu" class="h-4 w-4"></i>
                     <span class="sr-only">Open menu</span>
                 </button>
-
-                {{-- Primary CTA --}}
-                <a href="#contact" class="hidden md:inline-flex btn-institutional-cta whitespace-nowrap">
-                    Contact Us
-                </a>
             </div>
         </div>
 
@@ -55,9 +61,15 @@
                 <a href="#research" class="nav-mobile">Research Areas</a>
                 <a href="{{ route('web.instruments') }}" class="nav-mobile">Instruments</a>
                 <a href="#contact" class="nav-mobile">Contact</a>
-                <a href="#contact" class="btn-institutional-cta mt-4 w-full text-center">
-                    Contact Us
-                </a>
+                @if(session('web_user_id'))
+                    <a href="{{ route('web.profile') }}" class="btn-institutional-login mt-4 w-full text-center">
+                        My Profile
+                    </a>
+                @else
+                    <a href="{{ route('web.login') }}" class="btn-institutional-login mt-4 w-full text-center">
+                        Login
+                    </a>
+                @endif
             </nav>
         </div>
     </div>
