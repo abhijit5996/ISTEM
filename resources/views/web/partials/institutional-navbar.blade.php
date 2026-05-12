@@ -1,5 +1,5 @@
 {{-- Premium Institutional Navbar - Research Centre Landing --}}
-<header class="sticky top-0 z-50 border-b border-slate-200/50 bg-white/95 backdrop-blur-md transition-all duration-200 dark:border-white/5 dark:bg-slate-950/80 dark:backdrop-blur-xl">
+<header class="sticky top-0 z-50 border-b border-slate-200/50 bg-white/95 backdrop-blur-md transition-all duration-200 dark:border-white/5 dark:bg-slate-950/80 dark:backdrop-blur-xl" x-data="{ mobileNavOpen: false }">
     <div class="mx-auto w-full max-w-7xl px-4 md:px-8">
         <div class="flex h-14 items-center justify-between gap-6 md:gap-8" data-institutional-navbar>
             {{-- LEFT: Logo & Branding --}}
@@ -44,7 +44,14 @@
                 </button>
 
                 {{-- Mobile Menu Toggle --}}
-                <button type="button" class="lg:hidden institutional-icon-btn" data-mobile-nav-toggle title="Menu">
+                <button
+                    type="button"
+                    class="lg:hidden institutional-icon-btn"
+                    @click="mobileNavOpen = !mobileNavOpen"
+                    :aria-expanded="mobileNavOpen.toString()"
+                    aria-controls="institutional-mobile-nav"
+                    title="Menu"
+                >
                     <i data-lucide="menu" class="h-4 w-4"></i>
                     <span class="sr-only">Open menu</span>
                 </button>
@@ -52,7 +59,19 @@
         </div>
 
         {{-- Mobile Navigation (Hidden by default) --}}
-        <div class="hidden border-t border-slate-200 py-4 dark:border-white/5" data-mobile-nav>
+        <div
+            id="institutional-mobile-nav"
+            x-cloak
+            x-show="mobileNavOpen"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-2"
+            class="border-t border-slate-200 py-4 dark:border-white/5"
+            data-mobile-nav
+        >
             <nav class="space-y-1" aria-label="Mobile navigation">
                 <a href="{{ route('web.home') }}" class="nav-mobile">Home</a>
                 <a href="#team" class="nav-mobile">Team</a>
@@ -74,23 +93,3 @@
         </div>
     </div>
 </header>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileToggle = document.querySelector('[data-mobile-nav-toggle]');
-    const mobileNav = document.querySelector('[data-mobile-nav]');
-
-    if (mobileToggle && mobileNav) {
-        mobileToggle.addEventListener('click', function() {
-            mobileNav.classList.toggle('hidden');
-        });
-
-        // Close on navigation
-        mobileNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileNav.classList.add('hidden');
-            });
-        });
-    }
-});
-</script>

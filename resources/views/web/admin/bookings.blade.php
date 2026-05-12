@@ -1,15 +1,22 @@
 @extends('layouts.main')
 
 @section('content')
+    <div x-data="{ loading: false }">
     <x-ui.page-header
         kicker="Administration"
         title="Booking Management"
         subtitle="Approve, reject, and annotate booking requests."
+        data-reveal
     >
-        <a href="{{ route('web.admin.bookings.export') }}" class="btn-pill btn-ghost">Export CSV</a>
+        <x-ui.button variant="ghost" href="{{ route('web.admin.bookings.export') }}">Export CSV</x-ui.button>
     </x-ui.page-header>
 
-    <x-ui.table :headers="['ID', 'User', 'Instrument', 'Time Slot', 'Status', 'Actions']" class="mt-6">
+    <div x-show="loading">
+        <x-ui.table-skeleton :rows="6" :cols="6" />
+    </div>
+
+    <div x-show="!loading">
+    <x-ui.table :headers="['ID', 'User', 'Instrument', 'Time Slot', 'Status', 'Actions']" class="mt-6" data-reveal>
         @foreach($bookings as $booking)
             <tr>
                 <td>{{ $booking->id }}</td>
@@ -23,13 +30,13 @@
                 <td>
                     <div class="space-y-3">
                         @if($booking->status === 'pending')
-                            <form method="POST" action="{{ route('web.admin.bookings.approve', $booking->id) }}" class="space-y-2">
+                            <form method="POST" action="{{ route('web.admin.bookings.approve', $booking->id) }}" class="space-y-2" @submit="loading = true">
                                 @csrf
                                 <input type="text" name="admin_comment" class="input-ui" placeholder="Approval notes (optional)">
-                                <button class="btn-pill btn-primary" type="submit">Approve</button>
+                                <x-ui.button variant="primary" type="submit">Approve</x-ui.button>
                             </form>
 
-                            <form method="POST" action="{{ route('web.admin.bookings.reject', $booking->id) }}" class="space-y-2">
+                            <form method="POST" action="{{ route('web.admin.bookings.reject', $booking->id) }}" class="space-y-2" @submit="loading = true">
                                 @csrf
                                 <input type="text" name="rejection_reason" class="input-ui" placeholder="Reject reason" required>
                                 <input type="text" name="admin_comment" class="input-ui" placeholder="Admin comments (optional)">
@@ -51,10 +58,12 @@
             </tr>
         @endforeach
     </x-ui.table>
+    </div>
 
     @if($bookings->hasPages())
         <div class="mt-6 flex justify-center">
             {{ $bookings->links() }}
         </div>
     @endif
+    </div>
 @endsection

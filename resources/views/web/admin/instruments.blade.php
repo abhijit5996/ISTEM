@@ -1,18 +1,20 @@
 @extends('layouts.main')
 
 @section('content')
+    <div x-data="{ loading: false }">
     <x-ui.page-header
         kicker="Administration"
         title="Instrument Management"
         subtitle="Manage inventory, upload assets, and maintain availability by location."
+        data-reveal
     >
         <div class="flex flex-wrap gap-2">
-            <button type="button" class="btn-pill btn-primary" data-open-modal="add-instrument-modal">Add Instrument</button>
-            <button type="button" class="btn-pill btn-ghost" data-open-modal="bulk-upload-modal">Bulk Upload</button>
+            <x-ui.button variant="primary" size="md" type="button" data-open-modal="add-instrument-modal">Add Instrument</x-ui.button>
+            <x-ui.button variant="ghost" size="md" type="button" data-open-modal="bulk-upload-modal">Bulk Upload</x-ui.button>
         </div>
     </x-ui.page-header>
 
-    <section class="panel">
+    <section class="panel" data-reveal>
         <form method="GET" action="{{ route('web.admin.instruments') }}" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <div>
                 <label class="label-ui" for="location">Filter by location</label>
@@ -51,7 +53,12 @@
         </form>
     </section>
 
-    <x-ui.table :headers="['Name', 'Status', 'Location', 'Availability', 'Actions']" class="mt-6">
+    <div x-show="loading">
+        <x-ui.table-skeleton :rows="6" :cols="5" />
+    </div>
+
+    <div x-show="!loading">
+    <x-ui.table :headers="['Name', 'Status', 'Location', 'Availability', 'Actions']" class="mt-6" data-reveal>
         @foreach($instruments as $instrument)
             <tr>
                 <td class="font-semibold">{{ $instrument->name }}</td>
@@ -62,8 +69,8 @@
                 </td>
                 <td>
                     <div class="flex flex-wrap items-center gap-2">
-                        <button class="btn-pill btn-ghost" type="button" data-open-modal="edit-instrument-{{ $instrument->id }}">Edit</button>
-                        <form method="POST" action="{{ route('web.admin.instruments.delete', $instrument->id) }}">
+                        <x-ui.button variant="ghost" size="sm" type="button" data-open-modal="edit-instrument-{{ $instrument->id }}">Edit</x-ui.button>
+                        <form method="POST" action="{{ route('web.admin.instruments.delete', $instrument->id) }}" @submit="loading = true">
                             @csrf
                             <button class="btn-pill btn-warn" type="submit">Delete</button>
                         </form>
@@ -72,6 +79,7 @@
             </tr>
         @endforeach
     </x-ui.table>
+    </div>
 
     @if($instruments->hasPages())
         <div class="mt-6 flex justify-center">
@@ -81,7 +89,7 @@
 
     @foreach($instruments as $instrument)
         <x-ui.modal id="edit-instrument-{{ $instrument->id }}" title="Edit Instrument">
-            <form method="POST" action="{{ route('web.admin.instruments.update', $instrument->id) }}" enctype="multipart/form-data" class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <form method="POST" action="{{ route('web.admin.instruments.update', $instrument->id) }}" enctype="multipart/form-data" class="grid grid-cols-1 gap-3 sm:grid-cols-2" @submit="loading = true">
                 @csrf
                 <x-ui.form-input class="sm:col-span-2" label="Name" name="name" :value="$instrument->name" required />
                 <x-ui.form-input label="Category" name="category" :value="$instrument->category" required />
@@ -106,7 +114,7 @@
     @endforeach
 
     <x-ui.modal id="add-instrument-modal" title="Add Instrument">
-        <form method="POST" action="{{ route('web.admin.instruments.store') }}" enctype="multipart/form-data" class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <form method="POST" action="{{ route('web.admin.instruments.store') }}" enctype="multipart/form-data" class="grid grid-cols-1 gap-3 sm:grid-cols-2" @submit="loading = true">
             @csrf
             <x-ui.form-input class="sm:col-span-2" label="Name" name="name" required />
             <x-ui.form-input label="Category" name="category" required />
@@ -122,7 +130,7 @@
     </x-ui.modal>
 
     <x-ui.modal id="bulk-upload-modal" title="Bulk Upload">
-        <form method="POST" action="{{ route('web.admin.instruments.bulk-upload') }}" enctype="multipart/form-data" class="space-y-3">
+        <form method="POST" action="{{ route('web.admin.instruments.bulk-upload') }}" enctype="multipart/form-data" class="space-y-3" @submit="loading = true">
             @csrf
             <x-ui.file-upload label="Upload CSV" name="bulk_upload" accept=".csv,text/csv" />
             <p class="text-sm text-slate-500 dark:text-slate-400">CSV headers: <span class="font-semibold">name, category, location</span>. Optional: description, usage_cost, status.</p>
@@ -132,4 +140,5 @@
             </div>
         </form>
     </x-ui.modal>
+    </div>
 @endsection

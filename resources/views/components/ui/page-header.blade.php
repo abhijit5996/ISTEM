@@ -5,7 +5,8 @@
     'class' => '',
 ])
 
-<section {{ $attributes->merge(['class' => trim('panel ' . $class)]) }}>
+<section {{ $attributes->merge(['class' => trim('panel relative overflow-hidden ' . $class)]) }}>
+    <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"></div>
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
         <div>
             @if($kicker)
@@ -13,7 +14,7 @@
             @endif
 
             @if($title)
-                <h1 class="mt-1 text-2xl font-semibold leading-tight sm:text-3xl">{{ $title }}</h1>
+                <h1 class="mt-1 text-2xl font-semibold leading-tight text-slate-900 sm:text-3xl dark:text-slate-100">{{ $title }}</h1>
             @endif
 
             @if($subtitle)

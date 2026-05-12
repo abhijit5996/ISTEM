@@ -252,10 +252,40 @@
     </div>
 
     <div class="relative mx-auto w-full max-w-7xl px-4 py-6 md:px-8 md:py-8">
-        <main id="main-content" class="space-y-8">
-            @yield('breadcrumbs')
-            @yield('content')
-        </main>
+        @if(session('web_admin_id') && request()->is('admin*'))
+            <div x-data="{ mobileSidebarOpen: false }" x-init="$watch('mobileSidebarOpen', (val) => { if (typeof window.gsap === 'undefined') return; if (val) { $nextTick(() => window.gsap.to($refs.sidebar, { x: 0, duration: 0.36, ease: 'power3.out' })); } else { window.gsap.to($refs.sidebar, { x: '100%', duration: 0.32, ease: 'power3.in' }); } })" class="admin-shell grid gap-6 lg:grid-cols-[260px_1fr]">
+                <aside class="hidden lg:block">
+                    @include('components.ui.admin-sidebar')
+                </aside>
+
+                {{-- Mobile sidebar toggle and slide-over --}}
+                <div class="lg:hidden mb-4">
+                    <button @click="mobileSidebarOpen = true" class="icon-btn">
+                        <i data-lucide="menu" class="h-4 w-4"></i>
+                        <span class="sr-only">Open admin menu</span>
+                    </button>
+                </div>
+
+                <div x-show="mobileSidebarOpen" x-cloak x-ref="mobileSidebar" class="fixed inset-0 z-90 flex lg:hidden">
+                    <div @click="mobileSidebarOpen = false" class="fixed inset-0 bg-black/40 backdrop-blur-sm"></div>
+                    <div x-ref="sidebar" style="transform: translateX(100%);" class="relative z-50 w-80 max-w-full" aria-hidden="true">
+                        <div class="h-full overflow-y-auto">
+                            @include('components.ui.admin-sidebar')
+                        </div>
+                    </div>
+                </div>
+
+                <main id="main-content" class="space-y-8">
+                    @yield('breadcrumbs')
+                    @yield('content')
+                </main>
+            </div>
+        @else
+            <main id="main-content" class="space-y-8">
+                @yield('breadcrumbs')
+                @yield('content')
+            </main>
+        @endif
     </div>
 @endif
 

@@ -1418,6 +1418,98 @@
     .hero-section::before {
         border-color: var(--app-border);
     }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    [data-reveal].aos-animate {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@layer components {
+    .panel {
+        @apply overflow-hidden rounded-3xl border border-slate-200/70 bg-white/85 p-5 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-xl transition duration-300 ease-out dark:border-white/10 dark:bg-slate-950/60 dark:shadow-[0_28px_80px_rgba(2,6,23,0.35)];
+    }
+
+    .btn-pill {
+        @apply inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 active:translate-y-0;
+    }
+
+    .btn-pill:hover {
+        transform: translateY(-1px);
+    }
+
+    .input-ui,
+    .select-ui {
+        @apply w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-4 focus:ring-cyan-500/10 dark:border-white/10 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder:text-slate-500;
+    }
+
+    .label-ui {
+        @apply mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400;
+    }
+
+    .table-shell {
+        @apply overflow-hidden rounded-3xl border border-slate-200/70 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/60;
+    }
+
+    .table-ui {
+        @apply min-w-full divide-y divide-slate-200 dark:divide-white/10;
+    }
+
+    .table-ui th {
+        @apply bg-slate-50/95 px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:bg-slate-900/70 dark:text-slate-400;
+    }
+
+    .table-ui td {
+        @apply border-t border-slate-200/70 px-4 py-4 text-sm text-slate-700 dark:border-white/5 dark:text-slate-300;
+    }
+
+    .table-ui tr:hover {
+        background-color: rgba(15, 23, 42, 0.03);
+    }
+
+    .skeleton {
+        @apply animate-pulse rounded-2xl bg-slate-200/80 dark:bg-slate-800/70;
+    }
+
+    .button-ui {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 active:translate-y-0;
+    }
+
+    .button-ui-primary {
+        @apply border border-transparent bg-linear-to-r from-cyan-500 via-sky-500 to-indigo-600 text-white shadow-lg shadow-cyan-500/15 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-cyan-500/20 dark:from-cyan-400 dark:via-sky-500 dark:to-indigo-500 dark:text-slate-950;
+    }
+
+    .button-ui-secondary {
+        @apply border border-slate-200 bg-white/90 text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-white/10 dark:bg-slate-950/55 dark:text-slate-200 dark:hover:border-cyan-400/25 dark:hover:bg-slate-900;
+    }
+
+    .button-ui-ghost {
+        @apply border border-transparent bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-white;
+    }
+
+    .alert-ui {
+        @apply rounded-2xl border px-4 py-3 shadow-sm backdrop-blur-xl;
+    }
+
+    .alert-ui-info {
+        @apply border-cyan-200 bg-cyan-50 text-cyan-950 dark:border-cyan-400/20 dark:bg-cyan-500/10 dark:text-cyan-100;
+    }
+
+    .alert-ui-success {
+        @apply border-emerald-200 bg-emerald-50 text-emerald-950 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-100;
+    }
+
+    .alert-ui-warning {
+        @apply border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-400/20 dark:bg-amber-500/10 dark:text-amber-100;
+    }
+
+    .alert-ui-danger {
+        @apply border-rose-200 bg-rose-50 text-rose-950 dark:border-rose-400/20 dark:bg-rose-500/10 dark:text-rose-100;
+    }
 }
 
 /* ============================================

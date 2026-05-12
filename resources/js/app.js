@@ -1,9 +1,82 @@
 import './bootstrap';
+import Alpine from 'alpinejs';
+import AOS from 'aos';
+import gsap from 'gsap';
+import 'aos/dist/aos.css';
+
+window.Alpine = Alpine;
+window.gsap = gsap;
+window.AOS = AOS;
+
+Alpine.start();
 
 const docEl = document.documentElement;
 const bodyEl = document.body;
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const bootstrapMotion = () => {
+	if (!prefersReducedMotion) {
+		const revealTargets = document.querySelectorAll('[data-reveal]');
+
+		if (revealTargets.length) {
+			revealTargets.forEach((element, index) => {
+				if (!element.hasAttribute('data-aos')) {
+					element.setAttribute('data-aos', 'fade-up');
+				}
+
+				if (!element.hasAttribute('data-aos-delay')) {
+					element.setAttribute('data-aos-delay', String(Math.min(index * 80, 360)));
+				}
+			});
+
+			AOS.init({
+				duration: 720,
+				easing: 'ease-out-cubic',
+				once: true,
+				offset: 72,
+				anchorPlacement: 'top-bottom',
+			});
+			AOS.refreshHard();
+		}
+
+		const mainHeader = document.querySelector('[data-main-header], [data-institutional-navbar]');
+		if (mainHeader && window.gsap) {
+			gsap.from(mainHeader, {
+				y: -16,
+				opacity: 0,
+				duration: 0.65,
+				ease: 'power3.out',
+			});
+		}
+
+		document.querySelectorAll('[data-hero-shell]').forEach((heroShell) => {
+			if (!window.gsap) {
+				return;
+			}
+
+			const heroTargets = heroShell.querySelectorAll('[data-hero-copy], [data-hero-visual], [data-hero-action], [data-hero-stat], [data-hero-kicker]');
+			if (!heroTargets.length) {
+				return;
+			}
+
+			gsap.from(heroTargets, {
+				y: 18,
+				opacity: 0,
+				duration: 0.75,
+				stagger: 0.08,
+				ease: 'power3.out',
+				clearProps: 'transform,opacity',
+			});
+		});
+	}
+};
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', bootstrapMotion, { once: true });
+} else {
+	bootstrapMotion();
+}
 
 if (bodyEl) {
 	window.requestAnimationFrame(() => {
@@ -58,6 +131,41 @@ document.querySelectorAll('[data-toast]').forEach((toast, index) => {
 		toast.style.transition = 'all 280ms ease';
 		window.setTimeout(() => toast.remove(), 320);
 	}, 3600 + index * 300);
+});
+
+// Allow JS to receive custom push-toast events and render toasts dynamically.
+document.addEventListener('push-toast', (ev) => {
+	try {
+		const detail = ev.detail || {};
+		const msg = detail.message || String(ev.detail || '');
+		const type = detail.type || 'success';
+
+		let root = document.getElementById('toast-root');
+		if (!root) {
+			root = document.createElement('div');
+			root.id = 'toast-root';
+			root.className = 'pointer-events-none fixed right-4 top-20 z-60 flex w-full max-w-sm flex-col gap-2';
+			document.body.appendChild(root);
+		}
+
+		const toast = document.createElement('div');
+		toast.className = `toast toast-${type}`;
+		toast.setAttribute('data-toast', '');
+		toast.innerHTML = msg;
+		root.appendChild(toast);
+
+		// reuse existing removal timing
+		window.setTimeout(() => {
+			try {
+				toast.style.opacity = '0';
+				toast.style.transform = 'translateY(-6px)';
+				toast.style.transition = 'all 280ms ease';
+				window.setTimeout(() => toast.remove(), 320);
+			} catch (e) { /* ignore */ }
+		}, 3600);
+	} catch (e) {
+		console.warn('push-toast failed', e);
+	}
 });
 
 const bellButton = document.querySelector('[data-notification-toggle]');
@@ -269,6 +377,16 @@ window.addEventListener('scroll', handleScrolledUI, { passive: true });
 
 const revealTargets = document.querySelectorAll('[data-reveal]');
 if (revealTargets.length) {
+	revealTargets.forEach((element, index) => {
+		if (!element.hasAttribute('data-aos')) {
+			element.setAttribute('data-aos', 'fade-up');
+		}
+
+		if (!element.hasAttribute('data-aos-delay')) {
+			element.setAttribute('data-aos-delay', String(Math.min(index * 80, 360)));
+		}
+	});
+
 	if (prefersReducedMotion || !('IntersectionObserver' in window)) {
 		revealTargets.forEach((element) => element.classList.add('is-visible'));
 	} else {

@@ -8,10 +8,10 @@
     ];
 @endphp
 
-<section class="hero-section" data-reveal data-mouse-glow>
+<section class="hero-section" data-reveal data-mouse-glow data-hero-shell>
     <div class="hero-grid">
-        <div class="hero-copy">
-            <div class="hero-kicker-row">
+        <div class="hero-copy" data-hero-copy>
+            <div class="hero-kicker-row" data-hero-kicker>
                 <span class="hero-kicker">Biomaterials Laboratory (BL)</span>
                 <span class="hero-live-chip">Funded by SERB</span>
             </div>
@@ -30,12 +30,12 @@
                 <p class="hero-featured">Featured: {{ $heroInstrument->name }}</p>
             @endif
 
-            <div class="hero-actions">
+            <div class="hero-actions" data-hero-action>
                 <a href="#popular-product" class="hero-primary-btn">Explore Instruments</a>
                 <a href="{{ route('web.bag') }}" class="hero-secondary-btn">Open Bag</a>
             </div>
 
-            <div class="hero-stat-grid">
+            <div class="hero-stat-grid" data-hero-stat>
                 @foreach($heroStats as $stat)
                     <article class="hero-stat-card">
                         <span class="hero-stat-label">{{ $stat['label'] }}</span>
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <div class="hero-visual">
+        <div class="hero-visual" data-hero-visual>
             <div class="hero-visual-panel" data-parallax-card data-float>
                 <div class="hero-visual-orb"></div>
                 <div class="hero-visual-grid" aria-hidden="true"></div>

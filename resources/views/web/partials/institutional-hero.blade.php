@@ -1,9 +1,9 @@
 {{-- Cinematic Institutional Hero - Research Centre Landing --}}
-<section class="institutional-hero" data-institutional-hero>
+<section class="institutional-hero" data-institutional-hero data-hero-shell>
     <div class="mx-auto w-full max-w-7xl px-4 md:px-8 py-12 md:py-20">
         <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
             {{-- LEFT: Content & Storytelling --}}
-            <div class="institutional-hero-content" data-reveal>
+            <div class="institutional-hero-content" data-reveal data-hero-copy>
                 {{-- Kicker --}}
                 <div class="mb-6">
                     <span class="inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-50/50 px-4 py-2 text-xs font-bold uppercase tracking-widest text-cyan-700 dark:border-cyan-400/30 dark:bg-cyan-500/10 dark:text-cyan-300">
@@ -28,7 +28,7 @@
                 </div>
 
                 {{-- CTA Buttons --}}
-                <div class="flex flex-wrap items-center gap-4 pt-4">
+                <div class="flex flex-wrap items-center gap-4 pt-4" data-hero-action>
                     <a href="{{ route('web.instruments') }}" class="btn-institutional-primary">
                         <span>Explore Instruments</span>
                         <i data-lucide="arrow-right" class="h-4 w-4"></i>
@@ -39,7 +39,7 @@
                 </div>
 
                 {{-- Stats Row --}}
-                <div class="mt-12 grid grid-cols-3 gap-6 border-t border-slate-200 pt-8 dark:border-white/10">
+                <div class="mt-12 grid grid-cols-3 gap-6 border-t border-slate-200 pt-8 dark:border-white/10" data-hero-stat>
                     <article class="institutional-stat">
                         <span class="institutional-stat-value">{{ $ecosystemStats[0]['value'] ?? '24/7' }}</span>
                         <span class="institutional-stat-label">Research Access</span>
@@ -56,7 +56,7 @@
             </div>
 
             {{-- RIGHT: Immersive Visual --}}
-            <div class="institutional-hero-visual" data-parallax-hero>
+            <div class="institutional-hero-visual" data-parallax-hero data-hero-visual>
                 <div class="institutional-hero-image-wrap">
                     {{-- Gradient Backdrop --}}
                     <div class="institutional-hero-backdrop"></div>

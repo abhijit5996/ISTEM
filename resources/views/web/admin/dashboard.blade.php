@@ -7,13 +7,36 @@
         subtitle="Overview of users, instruments, bookings, and operational activity."
     />
 
-    <section class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-6">
-        <x-ui.card class="metric-card"><p class="text-sm text-slate-500 dark:text-slate-400">Total Users</p><p class="mt-2 text-3xl font-semibold">{{ $users }}</p></x-ui.card>
-        <x-ui.card class="metric-card"><p class="text-sm text-slate-500 dark:text-slate-400">Total Instruments</p><p class="mt-2 text-3xl font-semibold">{{ $instruments }}</p></x-ui.card>
-        <x-ui.card class="metric-card"><p class="text-sm text-slate-500 dark:text-slate-400">Total Bookings</p><p class="mt-2 text-3xl font-semibold">{{ $bookings }}</p></x-ui.card>
-        <x-ui.card class="metric-card"><p class="text-sm text-slate-500 dark:text-slate-400">Pending</p><p class="mt-2 text-3xl font-semibold">{{ $pending }}</p></x-ui.card>
-        <x-ui.card class="metric-card"><p class="text-sm text-slate-500 dark:text-slate-400">Approved</p><p class="mt-2 text-3xl font-semibold">{{ $approved }}</p></x-ui.card>
-        <x-ui.card class="metric-card"><p class="text-sm text-slate-500 dark:text-slate-400">Rejected</p><p class="mt-2 text-3xl font-semibold">{{ $rejected }}</p></x-ui.card>
+    <section class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-6" data-reveal>
+        <x-ui.card class="metric-card" data-reveal>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Total Users</p>
+            <p class="mt-2 text-3xl font-semibold">{{ $users }}</p>
+        </x-ui.card>
+
+        <x-ui.card class="metric-card" data-reveal>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Total Instruments</p>
+            <p class="mt-2 text-3xl font-semibold">{{ $instruments }}</p>
+        </x-ui.card>
+
+        <x-ui.card class="metric-card" data-reveal>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Total Bookings</p>
+            <p class="mt-2 text-3xl font-semibold">{{ $bookings }}</p>
+        </x-ui.card>
+
+        <x-ui.card class="metric-card" data-reveal>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Pending</p>
+            <p class="mt-2 text-3xl font-semibold">{{ $pending }}</p>
+        </x-ui.card>
+
+        <x-ui.card class="metric-card" data-reveal>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Approved</p>
+            <p class="mt-2 text-3xl font-semibold">{{ $approved }}</p>
+        </x-ui.card>
+
+        <x-ui.card class="metric-card" data-reveal>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Rejected</p>
+            <p class="mt-2 text-3xl font-semibold">{{ $rejected }}</p>
+        </x-ui.card>
     </section>
 
     <section class="panel">
