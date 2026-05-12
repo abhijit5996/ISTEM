@@ -17,24 +17,30 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 const bootstrapMotion = () => {
 	if (!prefersReducedMotion) {
-		const revealTargets = document.querySelectorAll('[data-reveal]');
+		const revealTargets = document.querySelectorAll('[data-reveal], .panel, .metric-card, .product-card, .promo-card, .timeline-card, .service-card, .table-shell, .hero-stat-card, .hero-visual-panel');
 
 		if (revealTargets.length) {
 			revealTargets.forEach((element, index) => {
+				const isCard = element.matches('.metric-card, .product-card, .promo-card, .timeline-card, .service-card, .hero-stat-card, .hero-visual-panel');
+
 				if (!element.hasAttribute('data-aos')) {
-					element.setAttribute('data-aos', 'fade-up');
+					element.setAttribute('data-aos', isCard ? 'zoom-in-up' : 'fade-up');
 				}
 
 				if (!element.hasAttribute('data-aos-delay')) {
-					element.setAttribute('data-aos-delay', String(Math.min(index * 80, 360)));
+					element.setAttribute('data-aos-delay', String(Math.min(index * (isCard ? 70 : 80), 420)));
+				}
+
+				if (!element.hasAttribute('data-aos-duration')) {
+					element.setAttribute('data-aos-duration', isCard ? '820' : '740');
 				}
 			});
 
 			AOS.init({
-				duration: 720,
+				duration: 820,
 				easing: 'ease-out-cubic',
 				once: true,
-				offset: 72,
+				offset: 56,
 				anchorPlacement: 'top-bottom',
 			});
 			AOS.refreshHard();
@@ -61,10 +67,11 @@ const bootstrapMotion = () => {
 			}
 
 			gsap.from(heroTargets, {
-				y: 18,
+				y: 22,
 				opacity: 0,
-				duration: 0.75,
-				stagger: 0.08,
+				scale: 0.985,
+				duration: 0.9,
+				stagger: 0.09,
 				ease: 'power3.out',
 				clearProps: 'transform,opacity',
 			});
