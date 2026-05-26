@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => env('MAIL_MAILER', env('SMTP_HOST') ? 'smtp' : 'log'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,26 +39,26 @@ return [
 
         'smtp' => [
             'transport' => 'smtp',
-            'scheme' => env('MAIL_SCHEME', env('MAIL_ENCRYPTION')),
+            'scheme' => env('SMTP_ENCRYPTION', env('MAIL_SCHEME', env('MAIL_ENCRYPTION'))),
             'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', '127.0.0.1'),
-            'port' => env('MAIL_PORT', 2525),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
-            'timeout' => env('MAIL_TIMEOUT', 10),
-            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+            'host' => env('SMTP_HOST', env('MAIL_HOST', '127.0.0.1')),
+            'port' => env('SMTP_PORT', env('MAIL_PORT', 2525)),
+            'username' => env('SMTP_USER', env('MAIL_USERNAME')),
+            'password' => env('SMTP_PASS', env('MAIL_PASSWORD')),
+            'timeout' => env('SMTP_TIMEOUT', env('MAIL_TIMEOUT', 10)),
+            'local_domain' => env('SMTP_EHLO_DOMAIN', env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST))),
         ],
 
         'smtp_alt' => [
             'transport' => 'smtp',
-            'scheme' => env('MAIL_SCHEME_ALT', env('MAIL_ENCRYPTION_ALT', env('MAIL_ENCRYPTION'))),
+            'scheme' => env('SMTP_ENCRYPTION_ALT', env('MAIL_SCHEME_ALT', env('MAIL_ENCRYPTION_ALT', env('MAIL_ENCRYPTION')))),
             'url' => env('MAIL_URL_ALT'),
-            'host' => env('MAIL_HOST_ALT', env('MAIL_HOST', '127.0.0.1')),
-            'port' => env('MAIL_PORT_ALT', 465),
-            'username' => env('MAIL_USERNAME_ALT', env('MAIL_USERNAME')),
-            'password' => env('MAIL_PASSWORD_ALT', env('MAIL_PASSWORD')),
-            'timeout' => env('MAIL_TIMEOUT_ALT', env('MAIL_TIMEOUT', 10)),
-            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+            'host' => env('SMTP_HOST_ALT', env('MAIL_HOST_ALT', env('MAIL_HOST', '127.0.0.1'))),
+            'port' => env('SMTP_PORT_ALT', env('MAIL_PORT_ALT', 465)),
+            'username' => env('SMTP_USER_ALT', env('MAIL_USERNAME_ALT', env('MAIL_USERNAME'))),
+            'password' => env('SMTP_PASS_ALT', env('MAIL_PASSWORD_ALT', env('MAIL_PASSWORD'))),
+            'timeout' => env('SMTP_TIMEOUT_ALT', env('MAIL_TIMEOUT_ALT', env('MAIL_TIMEOUT', 10))),
+            'local_domain' => env('SMTP_EHLO_DOMAIN_ALT', env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST))),
         ],
 
         'ses' => [
@@ -123,8 +123,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
+        'address' => env('EMAIL_FROM', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
+        'name' => env('EMAIL_FROM_NAME', env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel'))),
     ],
 
 ];

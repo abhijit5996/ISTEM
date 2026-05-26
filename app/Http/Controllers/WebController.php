@@ -8,6 +8,7 @@ use App\Models\BookingLock;
 use App\Models\Instrument;
 use App\Models\Queue;
 use App\Models\User;
+use App\Services\BookingNotificationService;
 use App\Services\EmailService;
 use App\Services\QueueService;
 use App\Services\SlotService;
@@ -875,7 +876,7 @@ class WebController extends Controller
         ]);
     }
 
-    public function approveBooking(Request $request, string $id): RedirectResponse
+    public function approveBooking(Request $request, string $id, BookingNotificationService $bookingNotificationService): RedirectResponse
     {
         $validated = $request->validate([
             'admin_comment' => 'nullable|string|max:500',
@@ -887,12 +888,20 @@ class WebController extends Controller
         $booking->rejection_reason = null;
         $booking->save();
 
+        $notification = $bookingNotificationService->sendApproval($booking);
+
         QueueService::processQueue($booking->instrument_id);
 
-        return back()->with('success', 'Booking approved successfully.');
+        $response = back()->with('success', 'Booking approved successfully.');
+
+        if (! $notification['sent']) {
+            return $response->with('warning', 'Booking was approved, but the confirmation email could not be delivered.');
+        }
+
+        return $response;
     }
 
-    public function rejectBooking(Request $request, string $id): RedirectResponse
+    public function rejectBooking(Request $request, string $id, BookingNotificationService $bookingNotificationService): RedirectResponse
     {
         $validated = $request->validate([
             'rejection_reason' => 'required|string|max:500',
@@ -905,7 +914,15 @@ class WebController extends Controller
         $booking->admin_comment = $validated['admin_comment'] ?? null;
         $booking->save();
 
-        return back()->with('success', 'Booking rejected successfully.');
+        $notification = $bookingNotificationService->sendRejection($booking);
+
+        $response = back()->with('success', 'Booking rejected successfully.');
+
+        if (! $notification['sent']) {
+            return $response->with('warning', 'Booking was rejected, but the rejection email could not be delivered.');
+        }
+
+        return $response;
     }
 
     public function adminQueue(): View

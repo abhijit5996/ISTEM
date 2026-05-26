@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Queue;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\QueueAvailableMail;
 
@@ -50,9 +51,24 @@ class QueueService
             return;
         }
 
-        dispatch(function () use ($first) {
+        try {
             Mail::to($first->email)->send(new QueueAvailableMail($first));
-        });
+
+            Log::info('Queue availability email sent', [
+                'queue_id' => $first->id,
+                'recipient_email' => $first->email,
+                'instrument_id' => $first->instrument_id,
+                'queue_position' => $first->queue_position,
+            ]);
+        } catch (\Throwable $exception) {
+            Log::error('Queue availability email failed', [
+                'queue_id' => $first->id,
+                'recipient_email' => $first->email,
+                'instrument_id' => $first->instrument_id,
+                'queue_position' => $first->queue_position,
+                'error' => $exception->getMessage(),
+            ]);
+        }
 
         // Mark as approved / notified and keep history
         $first->status = 'approved';

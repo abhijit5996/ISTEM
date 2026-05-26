@@ -19,7 +19,7 @@ class BookingRejectedMail extends Mailable
 
     public function build()
     {
-        return $this->from(config('services.resend.from', config('mail.from.address', 'onboarding@resend.dev')), config('mail.from.name'))
+        return $this->from(config('mail.from.address', config('services.resend.from', 'onboarding@resend.dev')), config('mail.from.name'))
             ->subject('Instrument Booking Rejected')
             ->view('emails.rejected');
     }

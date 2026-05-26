@@ -91,6 +91,25 @@ if (bodyEl) {
 	});
 }
 
+const resetPageTransitionState = () => {
+	if (!bodyEl) {
+		return;
+	}
+
+	bodyEl.classList.remove('page-leaving');
+	bodyEl.classList.add('page-ready');
+};
+
+window.addEventListener('pageshow', (event) => {
+	resetPageTransitionState();
+
+	if (event.persisted && bodyEl && !prefersReducedMotion) {
+		window.requestAnimationFrame(() => {
+			bodyEl.classList.add('page-ready');
+		});
+	}
+});
+
 const startPageLeaveTransition = (navigate) => {
 	if (!bodyEl || prefersReducedMotion) {
 		navigate();

@@ -160,7 +160,7 @@
         transform: translateY(0) scale(1);
     }
 
-    body.page-leaving {
+    body.page-leaving:not(.page-ready) {
         opacity: 0;
         transform: translateY(6px) scale(0.992);
         pointer-events: none;

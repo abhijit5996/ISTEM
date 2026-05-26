@@ -5,15 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Mail\Mailable;
 use App\Models\Booking;
 use App\Models\Instrument;
 use App\Models\BookingLock;
 use App\Services\SlotService;
 use App\Services\QueueService;
-use App\Mail\BookingApprovedMail;
-use App\Mail\BookingRejectedMail;
+use App\Services\BookingNotificationService;
 
 class BookingController extends Controller
 {
@@ -172,7 +169,7 @@ class BookingController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function approve($id)
+    public function approve($id, BookingNotificationService $bookingNotificationService)
     {
         try {
             $booking = Booking::findOrFail($id);
@@ -180,33 +177,16 @@ class BookingController extends Controller
             $booking->status = 'approved';
             $booking->save();
 
-            $recipient = $booking->email ?: $booking->user_email;
-            $emailSent = false;
-
-            // Send confirmation email synchronously so the
-            // API call completes only after attempting email.
-            try {
-                if ($recipient) {
-                    $emailSent = $this->sendBookingNotificationMail($recipient, new BookingApprovedMail($booking));
-                } else {
-                    Log::warning('Booking approval email recipient missing', [
-                        'booking_id' => $id,
-                    ]);
-                }
-            } catch (\Throwable $mailException) {
-                Log::error('Booking approval email failed', [
-                    'booking_id' => $id,
-                    'error' => $mailException->getMessage(),
-                ]);
-            }
+            $notification = $bookingNotificationService->sendApproval($booking);
 
             // ✅ PROCESS QUEUE WHEN SLOT RELEASED
             QueueService::processQueue($booking->instrument_id);
 
             return response()->json([
                 'success' => true,
-                'email_sent' => $emailSent,
-                'message' => $emailSent
+                'email_sent' => $notification['sent'],
+                'warning' => $notification['sent'] ? null : 'Booking approved but the confirmation email could not be delivered.',
+                'message' => $notification['sent']
                     ? 'Booking approved and email sent successfully'
                     : 'Booking approved but email failed',
             ]);
@@ -217,7 +197,7 @@ class BookingController extends Controller
         }
     }
 
-    public function reject($id)
+    public function reject($id, BookingNotificationService $bookingNotificationService)
     {
         try {
             $booking = Booking::findOrFail($id);
@@ -225,17 +205,13 @@ class BookingController extends Controller
             $booking->status = 'rejected';
             $booking->save();
 
-            $recipient = $booking->email ?: $booking->user_email;
+            $notification = $bookingNotificationService->sendRejection($booking);
 
-            dispatch(function () use ($recipient, $booking) {
-                if ($recipient) {
-                    Mail::mailer(config('services.resend.key') ? 'resend' : config('mail.default'))
-                        ->to($recipient)
-                        ->send(new BookingRejectedMail($booking));
-                }
-            });
-
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'email_sent' => $notification['sent'],
+                'warning' => $notification['sent'] ? null : 'Booking rejected but the rejection email could not be delivered.',
+            ]);
         } catch (\Exception $e) {
             Log::error('Booking rejection failed', ['booking_id' => $id, 'error' => $e->getMessage()]);
             return response()->json(['success' => false], 500);
@@ -250,25 +226,6 @@ class BookingController extends Controller
             'success' => true,
             'data' => $bookings,
         ]);
-    }
-
-    private function sendBookingNotificationMail(string $recipient, Mailable $mailable): bool
-    {
-        if (filled(config('services.resend.key'))) {
-            Mail::mailer('resend')->to($recipient)->send($mailable);
-            return true;
-        }
-
-        if (config('mail.default') === 'log') {
-            Log::warning('Booking notification email not sent because the active mailer is log', [
-                'recipient' => $recipient,
-                'mailable' => $mailable::class,
-            ]);
-            return false;
-        }
-
-        Mail::to($recipient)->send($mailable);
-        return true;
     }
 
     public function adminBookings()
