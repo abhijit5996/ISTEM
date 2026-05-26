@@ -216,7 +216,7 @@
     }
 
     .btn-pill {
-        @apply inline-flex h-10 items-center justify-center gap-2 rounded-full border px-5 text-sm font-semibold whitespace-nowrap transition duration-200 focus-visible:outline-none focus-visible:ring-2;
+        @apply btn rounded-full h-10 px-5 whitespace-nowrap;
         transition-property: transform, box-shadow, background-color, border-color, color;
     }
 
@@ -226,6 +226,40 @@
 
     .btn-primary {
         @apply border-transparent bg-linear-to-r from-cyan-500 via-cyan-600 to-indigo-600 text-white shadow-sm hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/30 active:translate-y-0 dark:from-cyan-400 dark:via-sky-500 dark:to-indigo-500 dark:text-white dark:shadow-[0_12px_32px_rgba(14,165,233,0.18)] dark:hover:shadow-[0_16px_40px_rgba(14,165,233,0.28)] focus-visible:ring-cyan-300;
+    }
+
+    /* Standardized button system */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    }
+
+    .btn-primary {
+        @apply btn h-12 px-5 bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-md hover:-translate-y-0.5 hover:shadow-lg;
+    }
+
+    .btn-secondary {
+        @apply btn h-12 px-5 border border-slate-300 bg-white text-slate-900 hover:bg-slate-50;
+    }
+
+    .btn-ghost {
+        @apply btn h-10 px-3 border border-transparent bg-transparent text-slate-700 hover:bg-slate-100;
+    }
+
+    .btn:disabled,
+    .btn[disabled] {
+        @apply opacity-50 pointer-events-none;
+    }
+
+    /* Motion / transition utilities */
+    .motion-soft {
+        transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease, opacity 180ms ease;
+        will-change: transform, opacity;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .motion-soft {
+            transition: none !important;
+        }
     }
 
     .btn-ghost {
@@ -637,6 +671,12 @@
         @apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300;
     }
 
+    /* Make hero CTAs consistent height for visual rhythm */
+    .hero-primary-btn,
+    .hero-secondary-btn {
+        @apply h-12 items-center gap-2;
+    }
+
     .hero-primary-btn {
         @apply bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-md hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/30 active:translate-y-0 dark:from-cyan-400 dark:via-sky-500 dark:to-indigo-500 dark:text-slate-950 dark:shadow-[0_12px_32px_rgba(14,165,233,0.16)];
     }
@@ -701,6 +741,26 @@
 
     .hero-visual-img {
         @apply relative z-10 mx-auto mt-3 aspect-square w-full max-w-md object-contain drop-shadow-sm dark:drop-shadow-[0_28px_64px_rgba(0,0,0,0.34)];
+    }
+
+    /* Supporter/logo alignment in hero */
+    .hero-supporters {
+        @apply mt-2 flex items-center gap-4;
+    }
+
+    /* Hero responsive adjustments */
+    @media (max-width: 768px) {
+        .hero-grid {
+            gap: 6;
+        }
+
+        .hero-copy {
+            @apply max-w-full;
+        }
+
+        .hero-visual {
+            @apply max-w-lg;
+        }
     }
 
     .hero-float-card {
@@ -862,7 +922,7 @@
     }
 
     .product-card {
-        @apply relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-white/40 bg-white/68 shadow-[0_18px_52px_rgba(15,23,42,0.08)] backdrop-blur-2xl transition duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] dark:border-slate-700/50 dark:bg-white/5 dark:shadow-[0_16px_48px_rgba(0,0,0,0.16)] dark:hover:border-cyan-400/25 dark:hover:shadow-[0_20px_56px_rgba(14,165,233,0.12)];
+        @apply relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-white/40 bg-white/68 shadow-[0_18px_52px_rgba(15,23,42,0.08)] backdrop-blur-2xl motion-soft hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] dark:border-slate-700/50 dark:bg-white/5 dark:shadow-[0_16px_48px_rgba(0,0,0,0.16)] dark:hover:border-cyan-400/25 dark:hover:shadow-[0_20px_56px_rgba(14,165,233,0.12)];
     }
 
     .product-card-media {
@@ -880,11 +940,24 @@
     }
 
     .product-card-favorite {
-        @apply absolute right-2.5 top-2.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-xs transition hover:border-rose-300 hover:text-rose-500 dark:border-slate-700/40 dark:bg-slate-800/60 dark:text-slate-400 dark:hover:border-rose-400/40 dark:hover:text-rose-300;
+        @apply absolute right-2.5 top-2.5 inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-xs transition hover:border-rose-300 hover:text-rose-500 dark:border-slate-700/40 dark:bg-slate-800/60 dark:text-slate-400 dark:hover:border-rose-400/40 dark:hover:text-rose-300;
+    }
+
+    .product-card-favorite i {
+        @apply h-5 w-5;
     }
 
     .product-card-quickview {
         @apply absolute inset-x-0 top-1/2 mx-auto flex w-fit -translate-y-1/2 scale-95 items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-semibold text-slate-900 opacity-0 shadow-sm transition duration-300 group-hover:scale-100 group-hover:opacity-100 dark:border-slate-700/40 dark:bg-slate-800/80 dark:text-slate-100;
+        pointer-events: auto;
+    }
+
+    .product-card:focus-within,
+    .product-card:focus {
+        outline: none;
+        box-shadow: 0 8px 30px rgba(34, 211, 238, 0.08);
+        transform: translateY(-2px);
+    }
     }
 
     .product-card-body {
@@ -936,11 +1009,18 @@
     }
 
     .product-cart-btn {
-        @apply inline-flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:from-cyan-400 dark:to-indigo-500 dark:text-slate-950 dark:shadow-[0_10px_20px_rgba(14,165,233,0.16)] dark:hover:shadow-[0_14px_26px_rgba(14,165,233,0.22)];
+        @apply inline-flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-sm motion-soft hover:-translate-y-0.5 hover:shadow-md dark:from-cyan-400 dark:to-indigo-500 dark:text-slate-950 dark:shadow-[0_10px_20px_rgba(14,165,233,0.16)] dark:hover:shadow-[0_14px_26px_rgba(14,165,233,0.22)];
     }
 
     .product-cart-btn:active {
         transform: scale(0.95);
+    }
+
+    /* Focus styles for interactive card controls */
+    .product-card-favorite:focus,
+    .product-card-quickview:focus,
+    .product-cart-btn:focus {
+        @apply ring-2 ring-cyan-300 outline-none;
     }
 
     .promo-grid {
@@ -1520,7 +1600,7 @@
     }
 
     .btn-pill {
-        @apply inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 active:translate-y-0;
+        @apply btn rounded-full px-4 py-2.5 whitespace-nowrap;
     }
 
     .btn-pill:hover {
@@ -1603,7 +1683,7 @@
 
 @layer components {
     .nav-premium {
-        @apply rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition duration-200 ease-out hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-900/50 dark:hover:text-white;
+        @apply rounded-lg px-4 py-2.5 text-sm font-medium text-slate-600 transition duration-200 ease-out hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-900/50 dark:hover:text-white whitespace-nowrap;
     }
 
     .nav-premium-active {
@@ -1615,7 +1695,7 @@
     }
 
     .institutional-icon-btn {
-        @apply flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition duration-200 hover:bg-slate-50 hover:text-slate-900 dark:border-white/10 dark:bg-slate-900/50 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white;
+        @apply flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition duration-200 hover:bg-slate-50 hover:text-slate-900 dark:border-white/10 dark:bg-slate-900/50 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white;
     }
 
     .btn-institutional-cta {

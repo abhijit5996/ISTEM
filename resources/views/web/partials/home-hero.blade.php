@@ -21,9 +21,9 @@
                 Fostering an inclusive, ethical, and interdisciplinary research environment prioritizing equity, diversity and translational impact in diagnostics, regenerative therapies, therapeutic delivery, and food & agricultural technologies.
             </p>
 
-            <div class="mt-3 flex items-center gap-3">
-                <img src="{{ asset('frontend/assets/serb-logo.svg') }}" alt="SERB logo" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
-                <img src="{{ asset('frontend/assets/centre-logo.svg') }}" alt="Biomaterials Laboratory logo" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
+            <div class="mt-3 hero-supporters flex items-center gap-4" aria-hidden="false">
+                <img src="{{ asset('frontend/assets/serb-logo.svg') }}" alt="SERB - Science & Engineering Research Board" class="h-12 sm:h-14 w-auto opacity-95 hover:opacity-100 transition-opacity" loading="lazy">
+                <img src="{{ asset('frontend/assets/centre-logo.svg') }}" alt="Biomaterials Laboratory logo" class="h-12 sm:h-14 w-auto opacity-95 hover:opacity-100 transition-opacity" loading="lazy">
             </div>
 
             @if($heroInstrument)
@@ -31,8 +31,8 @@
             @endif
 
             <div class="hero-actions" data-hero-action>
-                <a href="#popular-product" class="hero-primary-btn">Explore Instruments</a>
-                <a href="{{ route('web.bag') }}" class="hero-secondary-btn">Open Bag</a>
+                <a href="#popular-product" class="btn-primary">Explore Instruments</a>
+                <a href="{{ route('web.bag') }}" class="btn-secondary">Open Bag</a>
             </div>
 
             <div class="hero-stat-grid" data-hero-stat>

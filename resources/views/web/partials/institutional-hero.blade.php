@@ -29,11 +29,11 @@
 
                 {{-- CTA Buttons --}}
                 <div class="flex flex-wrap items-center gap-4 pt-4" data-hero-action>
-                    <a href="{{ route('web.instruments') }}" class="btn-institutional-primary">
+                    <a href="{{ route('web.instruments') }}" class="btn-primary" aria-label="Explore Instruments">
                         <span>Explore Instruments</span>
                         <i data-lucide="arrow-right" class="h-4 w-4"></i>
                     </a>
-                    <a href="#research" class="btn-institutional-secondary">
+                    <a href="#research" class="btn-secondary" aria-label="Research Areas">
                         Research Areas
                     </a>
                 </div>

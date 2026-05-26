@@ -99,9 +99,9 @@
                     </div>
                 </div>
 
-                    <div class="flex flex-wrap gap-2">
-                        <button type="submit" class="btn-pill btn-primary">Apply Filters</button>
-                        <a href="{{ $currentCategory ? route('web.category', $currentCategory) : route('web.instruments') }}" class="btn-pill btn-ghost">Reset</a>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="submit" class="btn btn-primary btn-pill">Apply Filters</button>
+                            <a href="{{ $currentCategory ? route('web.category', $currentCategory) : route('web.instruments') }}" class="btn btn-ghost btn-pill">Reset</a>
                     </div>
                 </form>
 
@@ -110,7 +110,7 @@
                         <p class="text-sm font-semibold">Categories</p>
                         <div class="mt-2 flex flex-wrap gap-2">
                             @foreach($categories as $category)
-                                <a href="{{ route('web.category', $category) }}" class="btn-pill {{ ($currentCategory && $currentCategory === $category) || in_array($category, $filters['category'] ?? [], true) ? 'btn-primary' : 'btn-ghost' }}">{{ $category }}</a>
+                                    <a href="{{ route('web.category', $category) }}" class="btn btn-pill {{ ($currentCategory && $currentCategory === $category) || in_array($category, $filters['category'] ?? [], true) ? 'btn-primary' : 'btn-ghost' }}">{{ $category }}</a>
                             @endforeach
                         </div>
                     </div>

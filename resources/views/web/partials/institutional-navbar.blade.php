@@ -15,7 +15,7 @@
 
             {{-- CENTER: Navigation Menu --}}
             <nav class="flex-1 hidden md:flex items-center justify-center gap-0.5" aria-label="Primary navigation">
-                <a href="{{ route('web.home') }}" class="nav-premium {{ request()->routeIs('web.home') ? 'nav-premium-active' : '' }}">Home</a>
+                <a href="{{ route('web.home') }}" class="nav-premium {{ request()->routeIs('web.home') ? 'nav-premium-active' : '' }}" {{ request()->routeIs('web.home') ? 'aria-current="page"' : '' }}>Home</a>
                 <a href="#team" class="nav-premium">Team</a>
                 <a href="#publications" class="nav-premium">Publications</a>
                 <a href="#projects" class="nav-premium">Projects</a>
@@ -38,7 +38,7 @@
                 @endif
 
                 {{-- Dark Mode Toggle --}}
-                <button type="button" class="institutional-icon-btn" data-theme-toggle title="Toggle dark mode">
+                <button type="button" class="institutional-icon-btn" data-theme-toggle title="Toggle dark mode" aria-label="Toggle dark mode">
                     <i data-lucide="moon" class="h-4 w-4"></i>
                     <span class="sr-only">Toggle dark mode</span>
                 </button>
@@ -51,6 +51,7 @@
                     :aria-expanded="mobileNavOpen.toString()"
                     aria-controls="institutional-mobile-nav"
                     title="Menu"
+                    aria-label="Toggle menu"
                 >
                     <i data-lucide="menu" class="h-4 w-4"></i>
                     <span class="sr-only">Open menu</span>

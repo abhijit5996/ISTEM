@@ -290,7 +290,7 @@
 
             <div class="services-cta">
                 <p class="services-cta-text">Ready to streamline your lab operations?</p>
-                <a href="{{ route('web.home') }}#popular-product" class="btn-pill btn-primary">
+                <a href="{{ route('web.home') }}#popular-product" class="btn-primary" aria-label="Explore Instruments">
                     Explore Instruments
                 </a>
             </div>

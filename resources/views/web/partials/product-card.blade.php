@@ -15,19 +15,19 @@
             <form method="POST" action="{{ route('web.favorites.add', $instrument->id) }}">
                 @csrf
                 <button type="submit" class="product-card-favorite" aria-label="Add {{ $instrument->name }} to favorites">
-                    <i data-lucide="heart" class="h-4 w-4"></i>
+                    <i data-lucide="heart" class="h-5 w-5"></i>
                 </button>
             </form>
         @else
-            <a href="{{ route('web.login') }}" class="product-card-favorite" aria-label="Login to add {{ $instrument->name }} to favorites">
-                <i data-lucide="heart" class="h-4 w-4"></i>
+            <a href="{{ route('web.login') }}" class="product-card-favorite" aria-label="Login to add {{ $instrument->name }} to favorites" role="button" tabindex="0">
+                <i data-lucide="heart" class="h-5 w-5"></i>
             </a>
         @endif
 
         <img src="{{ $image }}" alt="{{ $instrument->name }}" class="product-card-image">
 
         @if($featured)
-            <a href="{{ route('web.instrument', $instrument->id) }}" class="product-card-quickview" aria-label="Quick view {{ $instrument->name }}">
+            <a href="{{ route('web.instrument', $instrument->id) }}" class="product-card-quickview" aria-label="Quick view {{ $instrument->name }}" tabindex="0">
                 <i data-lucide="eye" class="h-4 w-4"></i>
                 Quick view
             </a>
@@ -64,7 +64,7 @@
 
         <div class="product-card-footer gap-3">
             <span class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ $isAvailable ? 'Ready to book' : 'Join queue' }}</span>
-            <a href="{{ route('web.instrument', $instrument->id) }}" class="product-cart-btn" aria-label="Open {{ $instrument->name }} details">
+            <a href="{{ route('web.instrument', $instrument->id) }}" class="product-cart-btn" aria-label="Open {{ $instrument->name }} details" tabindex="0">
                 <i data-lucide="shopping-cart" class="h-4 w-4"></i>
             </a>
         </div>

@@ -3,7 +3,7 @@
         <p class="promo-card-label">{{ $banner['label'] }}</p>
         <h3 class="promo-card-title">{{ $banner['title'] }}</h3>
         <p class="promo-card-price">Start From ₹{{ $banner['price'] }}</p>
-        <a href="{{ $banner['url'] ?? route('web.home') }}" class="promo-card-link">
+        <a href="{{ $banner['url'] ?? route('web.home') }}" class="promo-card-link btn-ghost" aria-label="{{ $banner['cta'] }}">
             {{ $banner['cta'] }}
             <i data-lucide="arrow-right" class="h-4 w-4"></i>
         </a>
