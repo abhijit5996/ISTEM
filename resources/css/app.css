@@ -216,7 +216,7 @@
     }
 
     .btn-pill {
-        @apply btn rounded-full h-10 px-5 whitespace-nowrap;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-full h-10 px-5 whitespace-nowrap;
         transition-property: transform, box-shadow, background-color, border-color, color;
     }
 
@@ -229,20 +229,20 @@
     }
 
     /* Standardized button system */
-    @utility btn {
+    .btn {
         @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
     }
 
     .btn-primary {
-        @apply btn h-12 px-5 bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-md hover:-translate-y-0.5 hover:shadow-lg;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 h-12 px-5 bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-md hover:-translate-y-0.5 hover:shadow-lg;
     }
 
     .btn-secondary {
-        @apply btn h-12 px-5 border border-slate-300 bg-white text-slate-900 hover:bg-slate-50;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 h-12 px-5 border border-slate-300 bg-white text-slate-900 hover:bg-slate-50;
     }
 
     .btn-ghost {
-        @apply btn h-10 px-3 border border-transparent bg-transparent text-slate-700 hover:bg-slate-100;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 h-10 px-3 border border-transparent bg-transparent text-slate-700 hover:bg-slate-100;
     }
 
     .btn:disabled,
@@ -250,10 +250,15 @@
         @apply opacity-50 pointer-events-none;
     }
 
-    @utility motion-soft {
+    .motion-soft {
         transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease, opacity 180ms ease;
         will-change: transform, opacity;
-        @media (prefers-reduced-motion: reduce) {
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .motion-soft,
+        .product-card,
+        .product-cart-btn {
             transition: none !important;
         }
     }
@@ -918,7 +923,9 @@
     }
 
     .product-card {
-        @apply relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-white/40 bg-white/68 shadow-[0_18px_52px_rgba(15,23,42,0.08)] backdrop-blur-2xl motion-soft hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] dark:border-slate-700/50 dark:bg-white/5 dark:shadow-[0_16px_48px_rgba(0,0,0,0.16)] dark:hover:border-cyan-400/25 dark:hover:shadow-[0_20px_56px_rgba(14,165,233,0.12)];
+        @apply relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-white/40 bg-white/68 shadow-[0_18px_52px_rgba(15,23,42,0.08)] backdrop-blur-2xl hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] dark:border-slate-700/50 dark:bg-white/5 dark:shadow-[0_16px_48px_rgba(0,0,0,0.16)] dark:hover:border-cyan-400/25 dark:hover:shadow-[0_20px_56px_rgba(14,165,233,0.12)];
+        transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease, opacity 180ms ease;
+        will-change: transform, opacity;
     }
 
     .product-card-media {
@@ -1004,7 +1011,9 @@
     }
 
     .product-cart-btn {
-        @apply inline-flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-sm motion-soft hover:-translate-y-0.5 hover:shadow-md dark:from-cyan-400 dark:to-indigo-500 dark:text-slate-950 dark:shadow-[0_10px_20px_rgba(14,165,233,0.16)] dark:hover:shadow-[0_14px_26px_rgba(14,165,233,0.22)];
+        @apply inline-flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-sm hover:-translate-y-0.5 hover:shadow-md dark:from-cyan-400 dark:to-indigo-500 dark:text-slate-950 dark:shadow-[0_10px_20px_rgba(14,165,233,0.16)] dark:hover:shadow-[0_14px_26px_rgba(14,165,233,0.22)];
+        transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease, opacity 180ms ease;
+        will-change: transform, opacity;
     }
 
     .product-cart-btn:active {
@@ -1595,7 +1604,7 @@
     }
 
     .btn-pill {
-        @apply btn rounded-full px-4 py-2.5 whitespace-nowrap;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-full px-4 py-2.5 whitespace-nowrap;
     }
 
     .btn-pill:hover {
