@@ -42,7 +42,7 @@
         <div class="flex h-16 items-center justify-between gap-3 md:gap-4" data-main-header-inner>
             <div class="flex min-w-0 shrink-0 items-center gap-2">
                 <a href="{{ route('web.home') }}" class="group flex items-center gap-2.5 text-left">
-                    <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-cyan-500 to-indigo-600 text-[10px] font-bold text-white shadow-sm dark:from-cyan-400 dark:via-sky-500 dark:to-indigo-500 dark:text-slate-950">BL</span>
+                    <img src="{{ asset('frontend/assets/adamas-logo.png') }}" alt="Adamas University Logo" class="h-8 w-auto object-contain">
                     <span class="hidden sm:block">
                         <span class="block text-sm font-bold leading-tight text-slate-900 dark:text-white">Biomaterials Laboratory</span>
                         <span class="block text-xs font-medium text-slate-600 dark:text-slate-300">Research & Instrument Booking</span>

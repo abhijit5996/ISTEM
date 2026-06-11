@@ -5,7 +5,7 @@
             {{-- LEFT: Logo & Branding --}}
             <div class="flex shrink-0 items-center gap-2.5">
                 <a href="{{ route('web.home') }}" class="group flex items-center gap-2">
-                    <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-br from-cyan-500 to-indigo-600 text-xs font-bold text-white shadow-sm dark:from-cyan-400 dark:via-sky-500 dark:to-indigo-500 dark:text-slate-950">BL</span>
+                    <img src="{{ asset('frontend/assets/adamas-logo.png') }}" alt="Adamas University Logo" class="h-9 w-auto object-contain">
                     <span class="hidden lg:block">
                         <span class="block text-sm font-bold text-slate-900 dark:text-white leading-tight">Biomaterials Laboratory</span>
                         <span class="block text-xs font-medium text-slate-500 dark:text-slate-400">Research & Innovation</span>
