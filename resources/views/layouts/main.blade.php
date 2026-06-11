@@ -10,13 +10,12 @@
             try {
                 const storageKey = 'istem-theme';
                 const savedTheme = localStorage.getItem(storageKey);
-                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+                const theme = savedTheme || 'light';
                 document.documentElement.classList.toggle('dark', theme === 'dark');
                 document.documentElement.style.colorScheme = theme;
             } catch (error) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.style.colorScheme = 'dark';
+                document.documentElement.classList.remove('dark');
+                document.documentElement.style.colorScheme = 'light';
             }
         })();
     </script>

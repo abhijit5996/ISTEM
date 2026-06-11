@@ -137,8 +137,7 @@ const applyTheme = (theme) => {
 };
 
 const savedTheme = localStorage.getItem('istem-theme');
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-applyTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
+applyTheme(savedTheme || 'light');
 
 document.querySelectorAll('[data-theme-toggle]').forEach((toggle) => {
 	toggle.addEventListener('click', () => {
